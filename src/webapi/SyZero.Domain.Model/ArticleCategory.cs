@@ -3,52 +3,49 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SyZero.Domain.Model
 {
-    public class User : EfEntityBase
+    public class ArticleCategory : EfEntityBase
     {
         /// <summary>
-        /// 用户名
+        /// 名称
         /// </summary>
         [MaxLength(200)]
         public string Name { get; set; }
         /// <summary>
-        /// 密码
+        /// 种类
         /// </summary>
-        [MaxLength(200)]
-        public string Password { get; set; }
+        public string TypeCode { get; set; }
         /// <summary>
-        /// 邮箱
+        /// 类型
         /// </summary>
-        [MaxLength(200)]
-        public string Mail { get; set; }
+        public long ParentID { get; set; }
         /// <summary>
-        /// 手机号
-        /// </summary>
-        [MaxLength(200)]
-        public string Phone { get; set; }
-        /// <summary>
-        /// 头像
+        /// 描述
         /// </summary>
         [MaxLength(1000)]
-        public string Photo { get; set; }
+        public string Description { get; set; }
         /// <summary>
-        /// 用户类型
+        /// 详情
         /// </summary>
-        public int Utype { get; set; }
+        public string Content { get; set; }
         /// <summary>
-        /// 性别  0男  1女  2保密
+        /// 缩略图
         /// </summary>
-        public int Sex { get; set; }
+        public string Picture { get; set; }
         /// <summary>
         /// 添加时间
         /// </summary>
         public System.DateTime AddTime { get; set; }
         /// <summary>
-        /// 最后登录时间
+        /// 更新时间
         /// </summary>
-        public System.DateTime LastTime { get; set; }
+        public System.DateTime UpdateTime { get; set; }
         /// <summary>
         /// 状态
         /// </summary>
         public int State { get; set; }
+        /// <summary>
+        /// 标签
+        /// </summary>
+        public string Tags { get; set; }
     }
 }
