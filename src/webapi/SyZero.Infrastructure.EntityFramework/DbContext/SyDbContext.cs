@@ -16,6 +16,11 @@ namespace SyZero.Infrastructure.EntityFramework
 
         }
         public DbSet<User> User { get; set; }
+        public DbSet<Article> Article { get; set; }
+        public DbSet<ArticleCategory> ArticleCategory { get; set; }
+        public DbSet<Comment>  Comment { get; set; }
+        public DbSet<Message>  Message { get; set; }
+        public DbSet<SiteConfig>  SiteConfig { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

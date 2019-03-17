@@ -4,11 +4,8 @@ using System.Text;
 
 namespace SyZero.Application.Dto
 {
-    public class UserDto
+    public class ArticleCategoryDto
     {
         public string Id { get; set; }
-        public string username { get; set; }
-        public string sex { get; set; }
-        public int MyProperty { get; set; }
     }
 }

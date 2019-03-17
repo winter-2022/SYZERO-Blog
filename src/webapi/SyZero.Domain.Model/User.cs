@@ -1,10 +1,12 @@
 ﻿
+using System;
 using System.ComponentModel.DataAnnotations;
-
+using SyZero.Common;
 namespace SyZero.Domain.Model
 {
     public class User : EfEntityBase
     {
+        #region 用户属性
         /// <summary>
         /// 用户名
         /// </summary>
@@ -49,6 +51,49 @@ namespace SyZero.Domain.Model
         /// <summary>
         /// 状态
         /// </summary>
-        public int State { get; set; }
+        public int State { get; set; } 
+        #endregion
+        /// <summary>
+        /// 修改用户信息
+        /// </summary>
+        /// <param name="user"></param>
+        public void UpDateInfo(User user)
+        {
+            this.Name = user.Name;
+            this.Phone = user.Phone;
+            this.Photo = user.Photo;
+            this.Sex = user.Sex;
+        }
+        /// <summary>
+        /// 停用此用户
+        /// </summary>
+        public void Delete()
+        {
+            this.State = -1;
+        }
+
+        public User(string name,string paw,int sex,string mail,string phone)
+        {
+            this.Id = SnowflakeId.GetID();
+            this.Name = name;
+            this.Password = paw;
+            this.AddTime = DateTime.Now;
+            this.State = 1;
+            this.Sex = sex;
+            this.Mail = mail;
+            this.Phone = phone;
+        }
+
+        public User AddUser()
+        {
+            this.Id = SnowflakeId.GetID();
+            this.AddTime = DateTime.Now;
+            return this;
+        }
+
+        public User()
+        {
+
+        }
     }
 }

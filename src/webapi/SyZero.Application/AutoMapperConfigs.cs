@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using AutoMapper;
+using SyZero.Application.Dto;
 using SyZero.Domain.Model;
 
 namespace SyZero.Application
@@ -11,8 +12,14 @@ namespace SyZero.Application
         //添加你的实体映射关系.
         public AutoMapperConfigs()
         {
-           // CreateMap<ArticleDto, Article>().ForMember(sou => sou.Status, dto => dto.MapFrom(p => p.Status == "发布" ? 1 : 0));
+            //Article转ArticleDto
+            CreateMap<Article, ArticleDto>().ForMember(dto => dto.Id, model => model.MapFrom(m => m.State));
+            //ArticleDto转Article
+            CreateMap<ArticleDto, Article>();
+
+            CreateMap<User, UserDto>();
+            CreateMap<UserDto, User>();
         }
-    
+
     }
 }

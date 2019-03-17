@@ -100,7 +100,7 @@ namespace SyZero.BlogAPI
 
             #region 注入Application和DomainService
             var assemblys1 = Assembly.Load("SyZero.Application");//Service是继承接口的实现方法类库名称
-            var baseType1 = typeof(IBaseService);//IBaseService 是一个接口（所有要实现依赖注入的借口都要继承该接口）
+            var baseType1 = typeof(IBaseService<>);//IBaseService 是一个接口（所有要实现依赖注入的借口都要继承该接口）
             builder.RegisterAssemblyTypes(assemblys1)
                 .Where(m => baseType1.IsAssignableFrom(m) && m != baseType1)
                 .AsImplementedInterfaces().InstancePerLifetimeScope();

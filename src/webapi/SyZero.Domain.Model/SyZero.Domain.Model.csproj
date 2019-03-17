@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SyZero.Common\SyZero.Common.csproj" />
     <ProjectReference Include="..\SyZero.Infrastructure.Mongo\SyZero.Infrastructure.Mongo.csproj" />
   </ItemGroup>
 

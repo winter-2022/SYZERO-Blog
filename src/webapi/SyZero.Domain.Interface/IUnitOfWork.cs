@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SyZero.Infrastructure.EfRepository
+namespace SyZero.Domain.Interface
 {
     public interface IUnitOfWork
     {
