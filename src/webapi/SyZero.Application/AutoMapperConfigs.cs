@@ -19,6 +19,18 @@ namespace SyZero.Application
 
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
+
+            CreateMap<ArticleCategory, ArticleCategoryDto>();
+            CreateMap<ArticleCategoryDto, ArticleCategory>();
+
+            CreateMap<Comment, CommentDto>();
+            CreateMap<CommentDto, Comment>();
+
+            CreateMap<Message, MessageDto>();
+            CreateMap<MessageDto, Message>();
+
+            CreateMap<SiteConfig, SiteConfigDto>();
+            CreateMap<SiteConfigDto, SiteConfig>();
         }
 
     }

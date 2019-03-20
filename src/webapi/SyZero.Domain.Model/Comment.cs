@@ -1,10 +1,12 @@
 ﻿
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace SyZero.Domain.Model
 {
     public class Comment : EfEntityBase
     {
+        #region 属性
         /// <summary>
         /// 用户ID
         /// </summary>
@@ -40,6 +42,14 @@ namespace SyZero.Domain.Model
         /// <summary>
         /// 点赞数
         /// </summary>
-        public int FabulousCount { get; set; }
+        public int FabulousCount { get; set; } 
+        #endregion
+
+        public void UpDate(Comment comment)
+        {
+            this.Content = comment.Content;
+            this.UpdateTime = DateTime.Now;
+          
+        }
     }
 }

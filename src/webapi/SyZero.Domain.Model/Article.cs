@@ -1,10 +1,12 @@
 ﻿
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace SyZero.Domain.Model
 {
     public class Article : EfEntityBase
     {
+        #region 文章属性
         /// <summary>
         /// 标题
         /// </summary>
@@ -78,6 +80,25 @@ namespace SyZero.Domain.Model
         /// <summary>
         /// SEO描述
         /// </summary>
-        public string SEODescription { get; set; }
+        public string SEODescription { get; set; } 
+        #endregion
+
+        /// <summary>
+        /// 修改文章信息
+        /// </summary>
+        /// <param name="article"></param>
+        public void UpDate(Article article)
+        {
+            this.Title = article.Title;
+            this.Description = article.Description;
+            this.Content = article.Content;
+            this.UpdateTime = DateTime.Now;
+            this.SEODescription = article.SEODescription;
+            this.SEOKeywords = article.SEOKeywords;
+            this.SEOTitle = article.SEOTitle;
+            this.Author = article.Author;
+            this.Category = article.Category;
+
+        }
     }
 }

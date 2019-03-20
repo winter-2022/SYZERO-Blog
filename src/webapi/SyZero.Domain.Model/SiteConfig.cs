@@ -1,10 +1,12 @@
 ﻿
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace SyZero.Domain.Model
 {
     public class SiteConfig : EfEntityBase
     {
+        #region 属性
         /// <summary>
         /// 键
         /// </summary>
@@ -32,6 +34,15 @@ namespace SyZero.Domain.Model
         /// <summary>
         /// 更新时间
         /// </summary>
-        public System.DateTime UpdateTime { get; set; }
+        public System.DateTime UpdateTime { get; set; } 
+        #endregion
+
+        public void UpDate(SiteConfig site)
+        {
+            this.Key = site.Key;
+            this.Value = site.Value;
+            this.UpdateTime = DateTime.Now;
+          
+        }
     }
 }

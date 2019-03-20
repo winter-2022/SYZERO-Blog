@@ -5,6 +5,7 @@ namespace SyZero.Domain.Model
 {
     public class ArticleCategory : EfEntityBase
     {
+        #region 属性
         /// <summary>
         /// 名称
         /// </summary>
@@ -46,6 +47,16 @@ namespace SyZero.Domain.Model
         /// <summary>
         /// 标签
         /// </summary>
-        public string Tags { get; set; }
+        public string Tags { get; set; } 
+        #endregion
+
+        public void UpDate(ArticleCategory category)
+        {
+            this.Name = category.Name;
+            this.ParentID = category.ParentID;
+            this.Description = category.Description;
+            this.Content = category.Content;
+            this.Picture = category.Picture;
+        }
     }
 }

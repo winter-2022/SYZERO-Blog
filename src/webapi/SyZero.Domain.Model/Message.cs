@@ -5,6 +5,7 @@ namespace SyZero.Domain.Model
 {
     public class Message : EfEntityBase
     {
+        #region 属性
         /// <summary>
         /// 标题
         /// </summary>
@@ -36,6 +37,14 @@ namespace SyZero.Domain.Model
         /// <summary>
         /// 状态
         /// </summary>
-        public int State { get; set; }
+        public int State { get; set; } 
+        #endregion
+
+        public void UpDate(Message message)
+        {
+            this.Messages = message.Messages;
+            this.Content = message.Content;
+          
+        }
     }
 }

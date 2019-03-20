@@ -2,3 +2,4 @@ node_modules
 .iceworks
 obj
 bin
+.vs
