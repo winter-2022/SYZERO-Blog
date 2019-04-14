@@ -3,27 +3,26 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using SyZero.Application.Dto;
-using SyZero.Application.Interface;
+
 using SyZero.Common;
 using SyZero.Domain;
-using SyZero.Domain.Interface;
+using SyZero.Domain.Repository;
 using SyZero.Domain.Model;
 
 
-namespace SyZero.Application.Service
+namespace SyZero.Application
 {
-    class UserService : IUserService
+   public class UserService : IUserService
     {
-        private readonly IEfRepository<User> _userRep;
+        private readonly IRepository<User> _userRep;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UserService(IEfRepository<User> userRep, IMapper mapper, IUnitOfWork unitOfWork)
+        public UserService(IRepository<User> userRep, IMapper mapper, IUnitOfWork unitOfWork)
         {
-            _userRep = userRep;
-            _mapper = mapper;
-            _unitOfWork = unitOfWork;
+                _userRep = userRep;
+                _mapper = mapper;
+                _unitOfWork = unitOfWork;
         }
 
         public bool Add(UserDto dto)
@@ -41,7 +40,7 @@ namespace SyZero.Application.Service
 
         public UserDto GetDto(string Id)
         {
-            var user = _userRep.GetModel(long.Parse(Id));
+            var user = _userRep.GetModel(Id);
             return _mapper.Map<UserDto>(user);
         }
 
@@ -51,6 +50,13 @@ namespace SyZero.Application.Service
             queryDto.limit = string.IsNullOrEmpty(queryDto.limit) ? "20" : queryDto.limit;
             var userlist = _userRep.GetPaged(int.Parse(queryDto.offset), int.Parse(queryDto.limit), p=>p.Id,u=>u.Name.IndexOf(queryDto.key) > 0,false);
             return _mapper.Map<List<UserDto>>(userlist);
+        }
+
+        public UserDto GetUser(string name)
+        {
+            Logger.Info("开始GetUser");
+            var user = _userRep.GetModel(p => p.Name == name);
+            return _mapper.Map<UserDto>(user);
         }
 
         public bool IsRepeatByName(string UserName)

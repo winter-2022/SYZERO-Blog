@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using SyZero.Application.Dto;
 
-namespace SyZero.Application.Interface
+
+namespace SyZero.Application
 {
-    interface ISiteConfigService : IBaseService<SiteConfigDto>
+    public interface ISiteConfigService : IBaseService<SiteConfigDto>
     {
      
     }

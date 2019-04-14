@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using SyZero.Application.Dto;
-
+using SyZero.Application;
+using SyZero.Common;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace SyZero.BlogAPI.Controllers.Admin
@@ -19,51 +19,43 @@ namespace SyZero.BlogAPI.Controllers.Admin
     [Route("api/a/[controller]")]
     public class UserController : BaseController
     {
-        public IConfiguration _configuration { get; }
+      
+        public IUserService _userService;
 
-        public UserController(IConfiguration configuration)
+        public UserController(IUserService userService)
         {
-            _configuration = configuration;
+            _userService = userService;
         }
 
         [HttpPost("Login")]
         public ResultJson Login([FromQuery]LoginDto request)
         {
-            if (request != null)
+            bool IsExits = _userService.Login(request.UserName, request.Password);
+            if (IsExits)
             {
-                //验证账号密码,这里只是为了demo，正式场景应该是与DB之类的数据源比对
-                if ("123456".Equals(request.UserName) && "123456".Equals(request.Password))
-                {
-                    var claims = new[] {
-                        //加入用户的名称
-                        new Claim(ClaimTypes.Name,request.UserName)
-                    };
+                var member = _userService.GetUser(request.UserName);
+                var claims = new[] {
+                            new Claim("name",request.UserName),
+                            new Claim("id",member.Id)
+                        };
 
-                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:SecurityKey"]));
-                    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-                    var authTime = DateTime.UtcNow;
-                    var expiresAt = authTime.AddDays(7);
-
-                    var token = new JwtSecurityToken(
-                        issuer: "syzero.com",
-                        audience: "syzero.com",
-                        claims: claims,
-                        expires: expiresAt,
-                        signingCredentials: creds);
-                    string usertoken = new JwtSecurityTokenHandler().WriteToken(token);
-                    return ResultJson("登陆成功", usertoken);
-                }
+                string usertoken = JwtHelper.GetToken(claims);
+                return ResultJson("登陆成功", usertoken);
             }
-            return ResultJson("账号或密码错误", null, 401);
+            else
+            {
+                return ResultJson("账号或密码错误", null, 401);
+            }
         }
 
        
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]string value)
+        public ResultJson Post([FromBody]RegisterDto register)
         {
+            int i = _userService.Register(register);
+            return ResultJson("注册成功", i);
         }
 
         // PUT api/<controller>/5

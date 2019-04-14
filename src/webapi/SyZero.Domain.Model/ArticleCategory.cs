@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SyZero.Domain.Model
 {
-    public class ArticleCategory : EfEntityBase
+    public class ArticleCategory : EntityBase
     {
         #region 属性
         /// <summary>

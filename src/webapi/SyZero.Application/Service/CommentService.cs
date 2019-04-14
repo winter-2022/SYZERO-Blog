@@ -3,21 +3,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using SyZero.Application.Dto;
-using SyZero.Application.Interface;
-using SyZero.Domain.Interface;
+
+using SyZero.Domain.Repository;
 using SyZero.Domain.Model;
 
 
-namespace SyZero.Application.Service
+namespace SyZero.Application
 {
     public class CommentService : ICommentService
     {
-        private readonly IEfRepository<Comment> _commentRep;
+        private readonly IRepository<Comment> _commentRep;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CommentService(IEfRepository<Comment> commentRep, IMapper mapper, IUnitOfWork unitOfWork)
+        public CommentService(IRepository<Comment> commentRep, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _commentRep = commentRep;
             _mapper = mapper;
@@ -39,7 +38,7 @@ namespace SyZero.Application.Service
 
         public CommentDto GetDto(string Id)
         {
-            var article = _commentRep.GetModel(long.Parse(Id));
+            var article = _commentRep.GetModel(Id);
             return _mapper.Map<CommentDto>(article);
         }
 

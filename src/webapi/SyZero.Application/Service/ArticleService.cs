@@ -3,20 +3,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using SyZero.Application.Dto;
-using SyZero.Application.Interface;
-using SyZero.Domain.Interface;
+
+using SyZero.Domain.Repository;
 using SyZero.Domain.Model;
 
-namespace SyZero.Application.Service
+namespace SyZero.Application
 {
     public class ArticleService : IArticleService
     {
-        private readonly IEfRepository<Article> _articleRep;
+        private readonly IRepository<Article> _articleRep;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public ArticleService(IEfRepository<Article> articleRep, IMapper mapper, IUnitOfWork unitOfWork)
+        public ArticleService(IRepository<Article> articleRep, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _articleRep = articleRep;
             _mapper = mapper;
@@ -39,7 +38,7 @@ namespace SyZero.Application.Service
 
         public ArticleDto GetDto(string Id)
         {
-            var article = _articleRep.GetModel(long.Parse(Id));
+            var article = _articleRep.GetModel(Id);
             return _mapper.Map<ArticleDto>(article);
         }
 

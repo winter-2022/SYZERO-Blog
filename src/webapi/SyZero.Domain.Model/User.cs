@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using SyZero.Common;
 namespace SyZero.Domain.Model
 {
-    public class User : EfEntityBase
+    public class User : EntityBase
     {
         #region 用户属性
         /// <summary>

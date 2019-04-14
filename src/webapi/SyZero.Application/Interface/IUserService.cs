@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using SyZero.Application.Dto;
 
-namespace SyZero.Application.Interface
+namespace SyZero.Application
 {
-    interface IUserService :IBaseService<UserDto>
+  public  interface IUserService :IBaseService<UserDto>
     {
         /// <summary>
         /// 用户登录
@@ -32,7 +31,12 @@ namespace SyZero.Application.Interface
         /// <param name="UserName"></param>
         /// <returns></returns>
         bool IsRepeatByName(string UserName);
-
+        /// <summary>
+        /// 获取用户
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        UserDto GetUser(string name);
 
 
     }

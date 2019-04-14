@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using AutoMapper;
-using SyZero.Application.Dto;
 using SyZero.Domain.Model;
 
 namespace SyZero.Application

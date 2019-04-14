@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using SyZero.Application.Dto;
+using SyZero.Application;
 
 namespace LiliBuyMasterService.Controllers
 {

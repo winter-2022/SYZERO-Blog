@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-using SyZero.Infrastructure.EntityFramework;
-using SyZero.Domain.Interface;
+using SyZero.Domain.Repository;
 using System.Threading.Tasks;
 
 namespace SyZero.Infrastructure.EfRepository

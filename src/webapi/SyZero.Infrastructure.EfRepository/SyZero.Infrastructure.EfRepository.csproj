@@ -1,12 +1,25 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+
+
   <ItemGroup>
-    <ProjectReference Include="..\SyZero.Domain.Interface\SyZero.Domain.Interface.csproj" />
-    <ProjectReference Include="..\SyZero.Infrastructure.EntityFramework\SyZero.Infrastructure.EntityFramework.csproj" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.1" />
+  </ItemGroup>
+
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\SyZero.Domain.Interface\SyZero.Domain.Repository.csproj" />
   </ItemGroup>
 
 </Project>

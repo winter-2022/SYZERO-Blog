@@ -4,15 +4,14 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
-using SyZero.Infrastructure.EntityFramework;
-using SyZero.Domain.Interface;
+using SyZero.Domain.Repository;
 using SyZero.Domain.Model;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace SyZero.Infrastructure.EfRepository
 {
-    public class EfRepository<TEntity> : IEfRepository<TEntity> where TEntity : class, IEfEntity
+    public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
     {
         private readonly SyDbContext _dbContext;
         private DbSet<TEntity> _dbSet;
@@ -183,7 +182,27 @@ namespace SyZero.Infrastructure.EfRepository
             throw new NotImplementedException();
         }
 
-     
+        public TEntity GetModel(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TEntity> GetModelAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            throw new NotImplementedException();
+        }
+
+        public long Delete(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<long> DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            throw new NotImplementedException();
+        }
+
+
         #endregion
     }
 }

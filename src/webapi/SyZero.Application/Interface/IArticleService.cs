@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using SyZero.Application.Dto;
-
-namespace SyZero.Application.Interface
+namespace SyZero.Application
 {
-    interface IArticleService : IBaseService<ArticleDto>
+    public interface IArticleService : IBaseService<ArticleDto>
     {
      
     }

@@ -3,21 +3,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using SyZero.Application.Dto;
-using SyZero.Application.Interface;
-using SyZero.Domain.Interface;
+
+using SyZero.Domain.Repository;
 using SyZero.Domain.Model;
 
 
-namespace SyZero.Application.Service
+namespace SyZero.Application
 {
     public class SiteConfigService : ISiteConfigService
     {
-        private readonly IEfRepository<SiteConfig> _siteconfigRep;
+        private readonly IRepository<SiteConfig> _siteconfigRep;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public SiteConfigService(IEfRepository<SiteConfig> siteconfigRep, IMapper mapper, IUnitOfWork unitOfWork)
+        public SiteConfigService(IRepository<SiteConfig> siteconfigRep, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _siteconfigRep = siteconfigRep;
             _mapper = mapper;
@@ -39,7 +38,7 @@ namespace SyZero.Application.Service
 
         public SiteConfigDto GetDto(string Id)
         {
-            var siteconfig = _siteconfigRep.GetModel(long.Parse(Id));
+            var siteconfig = _siteconfigRep.GetModel(Id);
             return _mapper.Map<SiteConfigDto>(siteconfig);
         }
 

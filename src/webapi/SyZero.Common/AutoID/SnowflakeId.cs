@@ -8,9 +8,9 @@ namespace SyZero.Common
     {
         private static IdWorker worker = new IdWorker(1, 1);
 
-        public static long GetID()
+        public static string GetID()
         {
-            return worker.NextId();
+            return worker.NextId().ToString();
         }
     }
 }

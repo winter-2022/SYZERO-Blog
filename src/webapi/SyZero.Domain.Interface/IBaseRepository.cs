@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using SyZero.Domain.Model;
 
-namespace SyZero.Domain.Interface
+namespace SyZero.Domain.Repository
 {
     public interface IBaseRepository<T, in TKey> where T : class
     {

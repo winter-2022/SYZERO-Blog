@@ -3,20 +3,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using SyZero.Application.Dto;
-using SyZero.Application.Interface;
-using SyZero.Domain.Interface;
+
+using SyZero.Domain.Repository;
 using SyZero.Domain.Model;
 
-namespace SyZero.Application.Service
+namespace SyZero.Application
 {
     public class MessageService : IMessageService
     {
-        private readonly IEfRepository<Message> _messageRep;
+        private readonly IRepository<Message> _messageRep;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public MessageService(IEfRepository<Message> messageRep, IMapper mapper, IUnitOfWork unitOfWork)
+        public MessageService(IRepository<Message> messageRep, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _messageRep = messageRep;
             _mapper = mapper;
@@ -39,7 +38,7 @@ namespace SyZero.Application.Service
 
         public MessageDto GetDto(string Id)
         {
-            var message = _messageRep.GetModel(long.Parse(Id));
+            var message = _messageRep.GetModel(Id);
             return _mapper.Map<MessageDto>(message);
         }
 

@@ -15,11 +15,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
-using SyZero.Infrastructure.EntityFramework;
-using SyZero.Domain.Interface;
+using SyZero.Domain.Repository;
 using SyZero.Domain.Model;
 using SyZero.Infrastructure.EfRepository;
-using SyZero.Infrastructure.Mongo;
 using SyZero.Infrastructure.MongoRepository;
 using System.Reflection;
 using SyZero.Application;
@@ -27,6 +25,7 @@ using SyZero.Domain.DomainService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using AutoMapper;
 
 namespace SyZero.BlogAPI
 {
@@ -39,10 +38,8 @@ namespace SyZero.BlogAPI
 
         public IConfiguration Configuration { get; }
         public IContainer ApplicationContainer { get; private set; }
-        // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -57,10 +54,10 @@ namespace SyZero.BlogAPI
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:SecurityKey"]))//拿到SecurityKey
                     };
                 });
-
-
+            services.AddAutoMapper();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+           
             #region Swagger
             services.AddSwaggerGen(c =>
               {
@@ -80,38 +77,19 @@ namespace SyZero.BlogAPI
                   //  c.OperationFilter<HttpHeaderOperation>(); // 添加httpHeader参数
               });
             #endregion
-
-            //使用Mongo连接数据库
-            //services.UseMongoDB(Configuration.GetSection("MongoConnection"));
-            //services.AddTransient(typeof(IUnitOfWork), typeof(UnitOfWork));   //注册数据持久
-            //使用EF连接数据库
-            services.UseEntityFramework(Configuration.GetConnectionString("sqlConnection"));
-
-            //services.AddMvc(options =>
-            //{
-            //    options.Filters.Add(typeof(WebApiResultMiddleware));
-            //    options.RespectBrowserAcceptHeader = true;
-            //});
-
+          
             var builder = new ContainerBuilder();//实例化 AutoFac  容器            
             builder.Populate(services);
-            builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IEfRepository<>)).InstancePerDependency();//注册仓储泛型
-            builder.RegisterGeneric(typeof(MongoRepository<>)).As(typeof(IMongoRepository<>)).InstancePerDependency();//注册仓储泛型
-
-            #region 注入Application和DomainService
-            var assemblys1 = Assembly.Load("SyZero.Application");//Service是继承接口的实现方法类库名称
-            var baseType1 = typeof(IBaseService<>);//IBaseService 是一个接口（所有要实现依赖注入的借口都要继承该接口）
-            builder.RegisterAssemblyTypes(assemblys1)
-                .Where(m => baseType1.IsAssignableFrom(m) && m != baseType1)
-                .AsImplementedInterfaces().InstancePerLifetimeScope();
-
-            var assemblys = Assembly.Load("SyZero.Domain.DomainService");//Service是继承接口的实现方法类库名称
-            var baseType = typeof(IDependency);//IDependency 是一个接口（所有要实现依赖注入的借口都要继承该接口）
-            builder.RegisterAssemblyTypes(assemblys)
-                .Where(m => baseType.IsAssignableFrom(m) && m != baseType)
-                .AsImplementedInterfaces().InstancePerLifetimeScope();
-            #endregion
-
+         
+            //使用EF仓储
+            builder.RegisterModule(new AutoFacEFModule(Configuration.GetConnectionString("sqlConnection")));
+            //使用Mongodb仓储
+            // builder.RegisterModule(new AutoFacMongoModule(Configuration.GetSection("MongoConnection")));
+            //注入Application程序集
+            builder.RegisterModule(new AutoFacApplicationModule());
+            //注入DomainService程序集
+            builder.RegisterModule(new AutoFacDomaninServiceModule());
+          
             ApplicationContainer = builder.Build();
             return new AutofacServiceProvider(ApplicationContainer);//第三方IOC接管 core内置DI容器
         }

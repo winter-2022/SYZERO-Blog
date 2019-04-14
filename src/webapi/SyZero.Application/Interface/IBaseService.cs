@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using SyZero.Application.Dto;
+
 
 namespace SyZero.Application
 {
-    public interface IBaseService<Dto>
+    public interface IBaseService<Dto>:IDependency
     {
         /// <summary>
         /// 获取Dto
