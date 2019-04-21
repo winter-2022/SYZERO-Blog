@@ -6,6 +6,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>F:\项目发布\SYZERO_Blog</_PublishTargetUrl>
+    <_PublishTargetUrl>E:\项目发布\SYBlog2</_PublishTargetUrl>
   </PropertyGroup>
 </Project>

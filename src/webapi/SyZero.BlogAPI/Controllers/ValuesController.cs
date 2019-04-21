@@ -34,10 +34,9 @@ namespace SyZero.BlogAPI.Controllers
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        [Authorize]
         public string Get(int id)
         {
-            return "value";
+          return  AliSms.SmsSend("13201463663", "SMS_163436125", "{'code':52332}");
         }
 
         // POST api/<controller>

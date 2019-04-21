@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using SyZero.Common;
 
 namespace SyZero.BlogAPI
 {
@@ -18,7 +19,7 @@ namespace SyZero.BlogAPI
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+            WebHost.CreateDefaultBuilder(args).UseConfiguration(ConfigurationUtil.Configuration)
                 .UseStartup<Startup>();
     }
 }
