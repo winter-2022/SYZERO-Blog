@@ -40,7 +40,7 @@ namespace SyZero.Common
         }
         public static string GetVersion()
         {
-            return JHKeys.ASSEMBLY_VERSION;
+            return SYKeys.ASSEMBLY_VERSION;
         }
         #endregion
 

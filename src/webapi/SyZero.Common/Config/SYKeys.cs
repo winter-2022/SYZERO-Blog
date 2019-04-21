@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SyZero.Common
 {
-    public class JHKeys
+    public class SYKeys
     {
         //系统版本
         /// <summary>
@@ -44,6 +44,7 @@ namespace SyZero.Common
         /// 消息代码
         /// </summary>
         public const string FILE_URL_NOTICE_CODE = "";
+        
 
         //Directory==================================================
         /// <summary>
@@ -72,6 +73,7 @@ namespace SyZero.Common
         /// 订单配置
         /// </summary>
         public const string CACHE_ORDER_CONFIG = "nc_cache_order_config";
+      
         /// <summary>
         /// HttpModule映射类
         /// </summary>
@@ -108,7 +110,7 @@ namespace SyZero.Common
         /// 官方消息
         /// </summary>
         public const string CACHE_OFFICIAL_NOTICE = "nc_official_notice";
-
+     
         //Session=====================================================
         /// <summary>
         /// 网页验证码
@@ -170,5 +172,31 @@ namespace SyZero.Common
         /// 频道文章表前缀
         /// </summary>
         public const string TABLE_CHANNEL_ARTICLE = "channel_article_";
+
+        //阿里短信=======================================================
+        /// <summary>
+        /// 短信签名配置
+        /// </summary>
+        public const string CACHE_SIGNNAME_ALISMS = "nc_cache_signname_alisms";
+        /// <summary>
+        /// 短信APPID配置
+        /// </summary>
+        public const string CACHE_ACCESSID_ALISMS = "nc_cache_accessid_alisms";
+        /// <summary>
+        /// 短信密钥配置
+        /// </summary>
+        public const string CACHE_SECRET_ALISMS = "nc_cache_secret_alisms";
+        /// <summary>
+        /// 验证码模板
+        /// </summary>
+        public const string CACHE_CAPTCHA_TENPLATE = "nc_cache_captcha_template";
+        /// <summary>
+        /// 注册模板
+        /// </summary>
+        public const string CACHE_REGISTER_TENPLATE = "nc_cache_register_template";
+        /// <summary>
+        /// 找回密码模板
+        /// </summary>
+        public const string CACHE_FORGOTPWd_TENPLATE = "nc_cache_forgotpwd_template";
     }
 }

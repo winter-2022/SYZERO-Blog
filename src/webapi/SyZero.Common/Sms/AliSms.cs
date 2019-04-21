@@ -7,13 +7,19 @@ namespace SyZero.Common
 {
     public class AliSms
     {
-        protected static string _accessId = "";   //accessId
-        protected static string _accessSecret = "";   //accessSecret
-        protected static string _signName = "";   //签名
-        static AliSms() {
-            _signName = ConfigurationUtil.GetSection("AliyunSms:signName");
-            _accessId = ConfigurationUtil.GetSection("AliyunSms:accessId");
-            _accessSecret = ConfigurationUtil.GetSection("AliyunSms:accessSecret");
+        private  string _accessId = "";   //accessId
+        private string _accessSecret = "";   //accessSecret
+        private string _signName = "";   //签名
+        /// <summary>
+        /// 阿里云短信服务
+        /// </summary>
+        /// <param name="signName">签名</param>
+        /// <param name="accessId">appid</param>
+        /// <param name="accessSecret">密钥</param>
+        public AliSms(string signName,string accessId,string accessSecret) {
+            _signName = signName;
+            _accessId = accessId;
+            _accessSecret = accessSecret;
         }
         /// <summary>
         /// 短信发送
@@ -22,7 +28,7 @@ namespace SyZero.Common
         /// <param name="templateCode">模板code</param>
         /// <param name="templateParam">内容</param>
         /// <returns>Code=ok 成功</returns>
-        public static string SmsSend(string mobile, string templateCode, string templateParam = "")
+        public string SmsSend(string mobile, string templateCode, string templateParam = "")
         {
             IClientProfile profile = DefaultProfile.GetProfile("default", _accessId, _accessSecret);
             DefaultAcsClient client = new DefaultAcsClient(profile);
