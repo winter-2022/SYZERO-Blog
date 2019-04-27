@@ -1,9 +1,9 @@
 <template>
   <!-- d2-container 文档 https://doc.d2admin.fairyever.com/zh/sys-components/container.html -->
   <d2-container class="page-SiteSetting">
-    <template slot="header">SiteSetting</template>
+    <template slot="header">网站设置</template>
     <basic-form/>
-    <template slot="footer">自动生成 1 个组件</template>
+    <template slot="footer">SYZERO2.0</template>
   </d2-container>
 </template>
 

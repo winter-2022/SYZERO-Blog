@@ -1,9 +1,9 @@
 <template>
   <!-- d2-container 文档 https://doc.d2admin.fairyever.com/zh/sys-components/container.html -->
   <d2-container class="page-SmsSetting">
-    <template slot="header">SmsSetting</template>
+    <template slot="header">短信配置</template>
     <basic-form/>
-    <template slot="footer">自动生成 1 个组件</template>
+    <template slot="footer">注：仅支持阿里短信服务</template>
   </d2-container>
 </template>
 
