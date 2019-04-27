@@ -1,43 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Autofac;
+﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Swashbuckle.AspNetCore.Swagger;
-using SyZero.Domain.Repository;
-using SyZero.Domain.Model;
-using SyZero.Infrastructure.EfRepository;
-using SyZero.Infrastructure.MongoRepository;
-using System.Reflection;
-using SyZero.Application;
-using SyZero.Domain.DomainService;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.IO;
 using System.Text;
-using AutoMapper;
+using SyZero.Application;
+using SyZero.Infrastructure.EfRepository;
 
 namespace SyZero.BlogAPI
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+        public IContainer ApplicationContainer { get; private set; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-        public IContainer ApplicationContainer { get; private set; }
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -49,8 +38,8 @@ namespace SyZero.BlogAPI
                         ValidateAudience = true,//是否验证Audience
                         ValidateLifetime = true,//是否验证失效时间
                         ValidateIssuerSigningKey = true,//是否验证SecurityKey
-                        ValidAudience = "syzero.com",//Audience
-                        ValidIssuer = "syzero.com",//Issuer，这两项和前面签发jwt的设置一致
+                        ValidAudience = Configuration["JWT:audience"],//Audience
+                        ValidIssuer = Configuration["JWT:issuer"],//Issuer，这两项和前面签发jwt的设置一致
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:SecurityKey"]))//拿到SecurityKey
                     };
                 });
@@ -108,7 +97,7 @@ namespace SyZero.BlogAPI
 
             app.UseAuthentication();
 
-          //  app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();   //使用https
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
