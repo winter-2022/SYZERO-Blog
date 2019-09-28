@@ -6,6 +6,7 @@ using System.Text;
 
 using SyZero.Domain.Repository;
 using SyZero.Domain.Model;
+using SyZero.Common;
 
 namespace SyZero.Application
 {
@@ -24,7 +25,20 @@ namespace SyZero.Application
 
         public bool Add(ArticleDto dto)
         {
-           var article =  _mapper.Map<Article>(dto);
+            var article = new Article()
+            {
+                AddTime = DateTime.Now,
+                BrowseCount = 55,
+                CateId = SnowflakeId.GetID(),
+                Content = "xxxxxxxxxxxxxxxxxxx",
+                Description = "xxxxxxxxxxxxxxxxxxx",
+                Status = 0,
+                ThumbnailId = SnowflakeId.GetID(),
+                Title = "asfasfas",
+                Tag = "xx",
+                UpdateTime = DateTime.Now,
+                UserId = SnowflakeId.GetID()
+            };
             _articleRep.Add(article);
             return _unitOfWork.SaveChange() > 0;
         }
@@ -36,7 +50,7 @@ namespace SyZero.Application
             return _unitOfWork.SaveChange() > 0;
         }
 
-        public ArticleDto GetDto(string Id)
+        public ArticleDto GetDto(long Id)
         {
             var article = _articleRep.GetModel(Id);
             return _mapper.Map<ArticleDto>(article);
@@ -52,10 +66,7 @@ namespace SyZero.Application
 
         public int Updata(ArticleDto dto)
         {
-            var article = _mapper.Map<Article>(dto);
-            var newarticle = _articleRep.GetModel(article.Id);
-            newarticle.UpDate(article);
-            _articleRep.Update(newarticle);
+        
             return _unitOfWork.SaveChange();
         }
     }

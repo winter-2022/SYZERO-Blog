@@ -1,9 +1,14 @@
 ﻿
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SyZero.Domain.Model
 {
+    /// <summary>
+    /// 文章表
+    /// </summary>
+    [Table("sy_article")]
     public class Article : EntityBase
     {
         #region 文章属性
@@ -11,94 +16,72 @@ namespace SyZero.Domain.Model
         /// 标题
         /// </summary>
         [MaxLength(200)]
+        [Column("title")]
         public string Title { get; set; }
         /// <summary>
-        /// 种类
+        /// 分类Id
         /// </summary>
-        public string TypeCode { get; set; }
+        [Column("cate_id")]
+        public long CateId { get; set; }
         /// <summary>
         /// 类型
         /// </summary>
-        public long Category { get; set; }
+        [Column("user_id")]
+        public long UserId { get; set; }
         /// <summary>
-        /// 描述
+        /// 缩略图Id
         /// </summary>
-        [MaxLength(1000)]
+        [Column("thumbnail_id")]
+        public long ThumbnailId { get; set; }
+        /// <summary>
+        /// 状态
+        /// </summary>
+        [Column("status")]
+        public int Status { get; set; }
+        /// <summary>
+        /// 简述
+        /// </summary>
+        [Column("description", TypeName = "text")]
         public string Description { get; set; }
         /// <summary>
-        /// 详情
+        /// 内容
         /// </summary>
+        [Column("content",TypeName="text")]
         public string Content { get; set; }
         /// <summary>
-        /// 缩略图
+        /// 标签
         /// </summary>
-        public string Picture { get; set; }
+        [MaxLength(500)]
+        [Column("tag")]
+        public string Tag { get; set; }
+        /// <summary>
+        /// 浏览量
+        /// </summary>
+        [Column("browse_count")]
+        public int BrowseCount { get; set; }
         /// <summary>
         /// 添加时间
         /// </summary>
+        [Column("add_time",TypeName = "datetime")]
         public System.DateTime AddTime { get; set; }
         /// <summary>
         /// 更新时间
         /// </summary>
+        [Column("update_time",TypeName = "datetime")]
         public System.DateTime UpdateTime { get; set; }
-        /// <summary>
-        /// 状态
-        /// </summary>
-        public int State { get; set; }
-        /// <summary>
-        /// 标签
-        /// </summary>
-        public string Tags { get; set; }
-        /// <summary>
-        /// 作者
-        /// </summary>
-        public string Author { get; set; }
-        /// <summary>
-        /// 点击数
-        /// </summary>
-        public int ClickCount { get; set; }
-        /// <summary>
-        /// 点赞数
-        /// </summary>
-        public int FabulousCount { get; set; }
-        /// <summary>
-        /// 分享数
-        /// </summary>
-        public int ShareCount { get; set; }
-        /// <summary>
-        /// 评分
-        /// </summary>
-        public int ScoreCount { get; set; }
-        /// <summary>
-        /// SEO标题
-        /// </summary>
-        public string SEOTitle { get; set; }
         /// <summary>
         /// SEO关键字
         /// </summary>
-        public string SEOKeywords { get; set; }
+        [MaxLength(500)]
+        [Column("seo_keywords")]
+        public string SeoKeywords { get; set; }
         /// <summary>
         /// SEO描述
         /// </summary>
-        public string SEODescription { get; set; } 
+        [MaxLength(1000)]
+        [Column("seo_description")]
+        public string SeoDescription { get; set; }
+
         #endregion
-
-        /// <summary>
-        /// 修改文章信息
-        /// </summary>
-        /// <param name="article"></param>
-        public void UpDate(Article article)
-        {
-            this.Title = article.Title;
-            this.Description = article.Description;
-            this.Content = article.Content;
-            this.UpdateTime = DateTime.Now;
-            this.SEODescription = article.SEODescription;
-            this.SEOKeywords = article.SEOKeywords;
-            this.SEOTitle = article.SEOTitle;
-            this.Author = article.Author;
-            this.Category = article.Category;
-
-        }
     }
 }

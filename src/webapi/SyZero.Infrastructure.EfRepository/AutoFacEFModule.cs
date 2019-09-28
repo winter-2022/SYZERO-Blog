@@ -17,8 +17,9 @@ namespace SyZero.Infrastructure.EfRepository
             builder.Register(c =>
             {
                 var optionsBuilder = new DbContextOptionsBuilder<SyDbContext>();
-                optionsBuilder.UseSqlServer(_sqlConnection);
-              //  optionsBuilder.UseMySql(_sqlConnection);
+                //optionsBuilder.UseSqlServer(_sqlConnection);
+                //  optionsBuilder.UseMySql(_sqlConnection);
+                optionsBuilder.UseMySql(_sqlConnection);
                 return optionsBuilder.Options;
             }).InstancePerLifetimeScope();
             // 注册 DbContext

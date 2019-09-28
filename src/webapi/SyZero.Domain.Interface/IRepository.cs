@@ -5,7 +5,7 @@ using SyZero.Domain.Model;
 
 namespace SyZero.Domain.Repository
 {
-    public interface IRepository<TEntity> : IBaseRepository<TEntity, string> where TEntity : class, IEntity
+    public interface IRepository<TEntity> : IBaseRepository<TEntity, long> where TEntity : class, IEntity
     {
       
     }

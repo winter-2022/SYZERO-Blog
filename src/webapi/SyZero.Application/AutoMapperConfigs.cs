@@ -12,24 +12,14 @@ namespace SyZero.Application
         public AutoMapperConfigs()
         {
             //Article转ArticleDto
-            CreateMap<Article, ArticleDto>().ForMember(dto => dto.Id, model => model.MapFrom(m => m.State));
+            CreateMap<Article, ArticleDto>().ForMember(dto => dto.Id, model => model.MapFrom(m => m.Status));
             //ArticleDto转Article
             CreateMap<ArticleDto, Article>();
 
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
 
-            CreateMap<ArticleCategory, ArticleCategoryDto>();
-            CreateMap<ArticleCategoryDto, ArticleCategory>();
-
-            CreateMap<Comment, CommentDto>();
-            CreateMap<CommentDto, Comment>();
-
-            CreateMap<Message, MessageDto>();
-            CreateMap<MessageDto, Message>();
-
-            CreateMap<SiteConfig, SiteConfigDto>();
-            CreateMap<SiteConfigDto, SiteConfig>();
+       
         }
 
     }

@@ -62,7 +62,7 @@ namespace SyZero.Infrastructure.MongoRepository
         #endregion
 
         #region Delete
-        public long Delete(string id)
+        public long Delete(long id)
         {
             return _collection.DeleteOne(a => a.Id == id).DeletedCount;
         }
@@ -72,7 +72,7 @@ namespace SyZero.Infrastructure.MongoRepository
             return _collection.DeleteOne(where).DeletedCount;
         }
 
-        public async Task<long> DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<long> DeleteAsync(long id, CancellationToken cancellationToken = default(CancellationToken))
         {
             var result = await _collection.DeleteOneAsync(a => a.Id == id, cancellationToken);
             return result.DeletedCount;
@@ -107,7 +107,7 @@ namespace SyZero.Infrastructure.MongoRepository
             return reulst.ToEnumerable();
         }
 
-        public TEntity GetModel(string id)
+        public TEntity GetModel(long id)
         {
             return GetModel(a => a.Id == id);
         }
@@ -120,7 +120,7 @@ namespace SyZero.Infrastructure.MongoRepository
 
      
 
-        public async Task<TEntity> GetModelAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<TEntity> GetModelAsync(long id, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await GetModelAsync(a => a.Id == id, cancellationToken);
         }

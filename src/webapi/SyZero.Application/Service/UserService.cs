@@ -27,7 +27,7 @@ namespace SyZero.Application
 
         public bool Add(UserDto dto)
         {
-            var user = _mapper.Map<User>(dto).AddUser();
+          
             return _unitOfWork.SaveChange() > 0;
         }
 
@@ -38,7 +38,7 @@ namespace SyZero.Application
             return _unitOfWork.SaveChange() > 0;
         }
 
-        public UserDto GetDto(string Id)
+        public UserDto GetDto(long Id)
         {
             var user = _userRep.GetModel(Id);
             return _mapper.Map<UserDto>(user);
@@ -73,27 +73,19 @@ namespace SyZero.Application
 
         public int Register(RegisterDto registerDto)
         {
-            var user = new User(registerDto.name, MD5Comm.Get32MD5One(registerDto.password), registerDto.sex,
-                registerDto.mail, registerDto.phone);
-            _userRep.Add(user);
+            
             return _unitOfWork.SaveChange();
         }
 
         public int Updata(UserDto dto)
         {
-            var user = _mapper.Map<User>(dto);
-            var newuser = _userRep.GetModel(user.Id);
-            newuser.UpDateInfo(user);
-            _userRep.Update(newuser);
+         
             return _unitOfWork.SaveChange();
         }
 
         public int UpdataInfo(UserDto  userDto)
         {
-            var user = _mapper.Map<User>(userDto);
-            var newuser = _userRep.GetModel(user.Id);
-            newuser.UpDateInfo(user);
-            _userRep.Update(newuser);
+          
             return _unitOfWork.SaveChange();
         }
     }

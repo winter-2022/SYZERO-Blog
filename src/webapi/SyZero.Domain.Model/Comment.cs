@@ -1,55 +1,68 @@
 ﻿
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SyZero.Domain.Model
 {
+    /// <summary>
+    /// 评论表
+    /// </summary>
+    [Table("sy_comment")]
     public class Comment : EntityBase
     {
         #region 属性
         /// <summary>
-        /// 用户ID
+        /// 用户Id
         /// </summary>
-        public long UserID { get; set; }
+        [Column("user_id")]
+        public long UserId { get; set; }
         /// <summary>
-        /// 种类
+        /// 文章Id
         /// </summary>
-        public long ArticleID { get; set; }
+        [Column("article_id")]
+        public long ArticleId { get; set; }
         /// <summary>
-        /// 父级ID
+        /// 上级Id
         /// </summary>
-        public long ParentID { get; set; }
+        [Column("parent_id")]
+        public long ParentId { get; set; }
+        /// <summary>
+        /// 昵称
+        /// </summary>
+        [MaxLength(200)]
+        [Column("user_name")]
+        public string UserName { get; set; }
+        /// <summary>
+        /// 邮箱
+        /// </summary>
+        [MaxLength(200)]
+        [Column("user_email")]
+        public string UserEmail { get; set; }
+        /// <summary>
+        /// 用户IP
+        /// </summary>
+        [MaxLength(200)]
+        [Column("user_ip")]
+        public string UserIP { get; set; }
         /// <summary>
         /// 内容
         /// </summary>
+        [MaxLength(2000)]
+        [Column("content")]
         public string Content { get; set; }
         /// <summary>
-        /// 缩略图
+        /// 发表时间
         /// </summary>
-        public string Picture { get; set; }
-        /// <summary>
-        /// 添加时间
-        /// </summary>
+        [Column("add_time", TypeName = "datetime")]
         public System.DateTime AddTime { get; set; }
-        /// <summary>
-        /// 更新时间
-        /// </summary>
-        public System.DateTime UpdateTime { get; set; }
         /// <summary>
         /// 状态
         /// </summary>
-        public int State { get; set; }
-        /// <summary>
-        /// 点赞数
-        /// </summary>
-        public int FabulousCount { get; set; } 
+        [Column("status")]
+        public int Status { get; set; }
         #endregion
 
-        public void UpDate(Comment comment)
-        {
-            this.Content = comment.Content;
-            this.UpdateTime = DateTime.Now;
-          
-        }
+      
     }
 }

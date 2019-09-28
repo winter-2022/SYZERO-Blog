@@ -9,6 +9,6 @@ namespace SyZero.Domain.Model
         /// <summary>
         /// 实体Id
         /// </summary>
-        string Id { get; set; }
+        long Id { get; set; }
     }
 }

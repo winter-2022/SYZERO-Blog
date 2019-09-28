@@ -21,10 +21,11 @@ namespace SyZero.BlogAPI.Controllers.Admin
     {
       
         public IUserService _userService;
-
-        public UserController(IUserService userService)
+        public IArticleService _articleService;
+        public UserController(IUserService userService, IArticleService articleService)
         {
             _userService = userService;
+            _articleService = articleService;
         }
 
         [HttpPost("Login")]
@@ -62,6 +63,7 @@ namespace SyZero.BlogAPI.Controllers.Admin
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
         {
+            _articleService.Add(new ArticleDto());
         }
 
        

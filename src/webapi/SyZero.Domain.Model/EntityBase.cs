@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using SyZero.Common;
 
@@ -7,7 +9,9 @@ namespace SyZero.Domain.Model
 {
     public class EntityBase : IEntity
     {
-        public string Id { get; set; } = SnowflakeId.GetID();
+        [Key]
+        [Column("id")]
+        public long Id { get; set; } = SnowflakeId.GetID();
 
     }
 }

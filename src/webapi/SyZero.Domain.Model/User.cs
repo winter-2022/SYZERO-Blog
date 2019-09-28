@@ -1,9 +1,11 @@
 ﻿
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using SyZero.Common;
 namespace SyZero.Domain.Model
 {
+    [Table("sy_user")]
     public class User : EntityBase
     {
         #region 用户属性
@@ -11,89 +13,69 @@ namespace SyZero.Domain.Model
         /// 用户名
         /// </summary>
         [MaxLength(200)]
+        [Column("name")]
         public string Name { get; set; }
         /// <summary>
         /// 密码
         /// </summary>
         [MaxLength(200)]
+        [Column("password")]
         public string Password { get; set; }
         /// <summary>
         /// 邮箱
         /// </summary>
         [MaxLength(200)]
+        [Column("mail")]
         public string Mail { get; set; }
         /// <summary>
         /// 手机号
         /// </summary>
         [MaxLength(200)]
+        [Column("phone")]
         public string Phone { get; set; }
         /// <summary>
         /// 头像
         /// </summary>
-        [MaxLength(1000)]
-        public string Photo { get; set; }
+        [Column("picture_id")]
+        public long PictureId { get; set; }
         /// <summary>
-        /// 用户类型
+        /// 用户等级
         /// </summary>
-        public int Utype { get; set; }
+        [Column("level")]
+        public int Level { get; set; }
         /// <summary>
         /// 性别  0男  1女  2保密
         /// </summary>
+        [Column("sex")]
         public int Sex { get; set; }
         /// <summary>
-        /// 添加时间
+        /// 注册时间
         /// </summary>
+        [Column("add_time", TypeName = "datetime")]
         public System.DateTime AddTime { get; set; }
         /// <summary>
         /// 最后登录时间
         /// </summary>
+        [Column("last_time", TypeName = "datetime")]
         public System.DateTime LastTime { get; set; }
+        /// <summary>
+        /// 最后登录IP
+        /// </summary>
+        [MaxLength(200)]
+        [Column("last_ip")]
+        public string LastIP { get; set; }
+        /// <summary>
+        /// 用户类型
+        /// </summary>
+        [Column("type")]
+        public int Type { get; set; }
         /// <summary>
         /// 状态
         /// </summary>
-        public int State { get; set; } 
+        [Column("status")]
+        public int Status { get; set; } 
         #endregion
-        /// <summary>
-        /// 修改用户信息
-        /// </summary>
-        /// <param name="user"></param>
-        public void UpDateInfo(User user)
-        {
-            this.Name = user.Name;
-            this.Phone = user.Phone;
-            this.Photo = user.Photo;
-            this.Sex = user.Sex;
-        }
-        /// <summary>
-        /// 停用此用户
-        /// </summary>
-        public void Delete()
-        {
-            this.State = -1;
-        }
+     
 
-        public User(string name,string paw,int sex,string mail,string phone)
-        {
-            this.Id = SnowflakeId.GetID();
-            this.Name = name;
-            this.Password = paw;
-            this.AddTime = DateTime.Now;
-            this.State = 1;
-            this.Sex = sex;
-            this.Mail = mail;
-            this.Phone = phone;
-        }
-
-        public User AddUser()
-        {
-            this.Id = SnowflakeId.GetID();
-            this.AddTime = DateTime.Now;
-            return this;
-        }
-
-        public User()
-        {
-
-        }
     }
 }

@@ -18,8 +18,9 @@ namespace SyZero.Infrastructure.EfRepository
                 .Build();
             var builder = new DbContextOptionsBuilder<SyDbContext>();
             var connectionString = configuration.GetConnectionString("sqlConnection");
-            builder.UseSqlServer(connectionString);
+            //  builder.UseSqlServer(connectionString);
             //  builder.UseMySql(_sqlConnection);
+            builder.UseMySql(connectionString);
             return new SyDbContext(builder.Options);
         }
     }

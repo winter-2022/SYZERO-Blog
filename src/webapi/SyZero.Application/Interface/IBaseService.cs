@@ -12,7 +12,7 @@ namespace SyZero.Application
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        Dto GetDto(string Id);
+        Dto GetDto(long Id);
         /// <summary>
         /// 获取Dto列表
         /// </summary>
