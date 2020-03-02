@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AssemblyName>SyZeroBlog.EntityFrameworkCore</AssemblyName>
+    <RootNamespace>SyZeroBlog.EntityFrameworkCore</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SyZeroBlog.Core\SyZeroBlog.Core.csproj" />
+  </ItemGroup>
+
+</Project>

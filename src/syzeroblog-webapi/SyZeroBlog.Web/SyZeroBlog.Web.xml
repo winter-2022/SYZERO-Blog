@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SyZeroBlog.Web</name>
+    </assembly>
+    <members>
+        <member name="M:SyZeroBlog.Web.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            原生Ioc注入
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SyZeroBlog.Web.Startup.AutofacServices(Autofac.ContainerBuilder)">
+            <summary>
+            Autofac注入模块
+            </summary>
+            <param name="builder"></param>
+        </member>
+    </members>
+</doc>

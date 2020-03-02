@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AssemblyName>SyZeroBlog.Web.Core</AssemblyName>
+    <RootNamespace>SyZeroBlog.Web.Core</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc4" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.6.0" />
+    <PackageReference Include="SyZero.AspNetCore" Version="1.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SyZeroBlog.Application\SyZeroBlog.Application.csproj" />
+    <ProjectReference Include="..\SyZeroBlog.EntityFrameworkCore\SyZeroBlog.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+
+</Project>
