@@ -50,6 +50,10 @@ namespace SyZeroBlog.Core.BlogManagement.Blogs
         /// </summary>
         public string Type { get; set; }
         /// <summary>
+        /// 模板
+        /// </summary>
+        public string Template { get; set; }
+        /// <summary>
         /// 是否顶置
         /// </summary>
         public bool IsTop { get; set; }
