@@ -7,8 +7,11 @@ using SyZeroBlog.Core.Authorization.Users;
 using SyZeroBlog.Core.BlogManagement;
 using SyZeroBlog.Core.BlogManagement.Blogs;
 using SyZeroBlog.Core.BlogManagement.Categorys;
+using SyZeroBlog.Core.BlogManagement.Comments;
 using SyZeroBlog.Core.BlogManagement.Tags;
 using SyZeroBlog.Core.Files;
+using SyZeroBlog.Core.Links;
+using SyZeroBlog.Core.Navigations;
 
 namespace SyZeroBlog.EntityFrameworkCore
 {
@@ -26,6 +29,9 @@ namespace SyZeroBlog.EntityFrameworkCore
         public DbSet<BlogCategory> BlogCategory { get; set; }
         public DbSet<Blog> Blog { get; set; }
         public DbSet<Tag> Tag { get; set; }
+        public DbSet<Comment>  Comment { get; set; }
+        public DbSet<Navigation> Navigation { get; set; }
+        public DbSet<Link> Link { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -39,7 +45,7 @@ namespace SyZeroBlog.EntityFrameworkCore
             modelBuilder.Entity<BlogCategory>()
                  .HasMany(t => t.Childs)
                  .WithOne(t => t.Parent)
-                 .HasForeignKey(t => t.Pid);
+                 .HasForeignKey(t => t.ParentId);
 
             modelBuilder.Entity<BlogCategory>()
                 .HasMany(g => g.Blogs)
@@ -58,7 +64,20 @@ namespace SyZeroBlog.EntityFrameworkCore
                 .WithOne(s => s.Tag)
                 .HasForeignKey(s => s.TagId);
 
-        
+            modelBuilder.Entity<Comment>()
+                .HasMany(g => g.Childs)
+                .WithOne(t => t.Parent)
+                .HasForeignKey(t => t.ParentId);
+
+            modelBuilder.Entity<Blog>()
+                .HasMany(g => g.Comments)
+                .WithOne(t => t.Blog)
+                .HasForeignKey(t => t.BlogId);
+
+            modelBuilder.Entity<Navigation>()
+                .HasMany(g => g.Childs)
+                .WithOne(t => t.Parent)
+                .HasForeignKey(t => t.ParentId);
         }
     }
 }

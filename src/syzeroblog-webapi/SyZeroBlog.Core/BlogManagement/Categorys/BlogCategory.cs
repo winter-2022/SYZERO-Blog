@@ -36,7 +36,7 @@ namespace SyZeroBlog.Core.BlogManagement.Categorys
         /// <summary>
         /// 上级Id
         /// </summary>
-        public long? Pid { get; set; }
+        public long? ParentId { get; set; }
 
         /// <summary>
         /// 上级

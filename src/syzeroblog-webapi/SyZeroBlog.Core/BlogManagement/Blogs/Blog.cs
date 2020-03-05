@@ -4,6 +4,7 @@ using System.Text;
 using SyZero.Domain.Entities;
 using SyZeroBlog.Core.Authorization.Users;
 using SyZeroBlog.Core.BlogManagement.Categorys;
+using SyZeroBlog.Core.BlogManagement.Comments;
 
 namespace SyZeroBlog.Core.BlogManagement.Blogs
 {
@@ -72,5 +73,10 @@ namespace SyZeroBlog.Core.BlogManagement.Blogs
         /// 创建时间
         /// </summary>
         public DateTime CreateTime { get; set; } = DateTime.Now;
+
+        /// <summary>
+        /// 评论
+        /// </summary>
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

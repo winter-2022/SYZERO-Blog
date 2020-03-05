@@ -10,7 +10,7 @@ using SyZeroBlog.EntityFrameworkCore;
 namespace SyZeroBlog.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(SyZeroBlogDbContext))]
-    [Migration("20200301141820_1.1")]
+    [Migration("20200305172346_1.1")]
     partial class _11
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,7 +69,7 @@ namespace SyZeroBlog.EntityFrameworkCore.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("SyZeroBlog.Core.BlogManagement.Blog.Blog", b =>
+            modelBuilder.Entity("SyZeroBlog.Core.BlogManagement.Blogs.Blog", b =>
                 {
                     b.Property<long>("Id");
 
@@ -121,7 +121,7 @@ namespace SyZeroBlog.EntityFrameworkCore.Migrations
                     b.ToTable("BlogTag");
                 });
 
-            modelBuilder.Entity("SyZeroBlog.Core.BlogManagement.Category.BlogCategory", b =>
+            modelBuilder.Entity("SyZeroBlog.Core.BlogManagement.Categorys.BlogCategory", b =>
                 {
                     b.Property<long>("Id");
 
@@ -134,16 +134,47 @@ namespace SyZeroBlog.EntityFrameworkCore.Migrations
 
                     b.Property<int>("Order");
 
-                    b.Property<long?>("Pid");
+                    b.Property<long?>("ParentId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Pid");
+                    b.HasIndex("ParentId");
 
                     b.ToTable("BlogCategory");
                 });
 
-            modelBuilder.Entity("SyZeroBlog.Core.BlogManagement.Tag.Tag", b =>
+            modelBuilder.Entity("SyZeroBlog.Core.BlogManagement.Comments.Comment", b =>
+                {
+                    b.Property<long>("Id");
+
+                    b.Property<string>("Author");
+
+                    b.Property<long>("BlogId");
+
+                    b.Property<string>("Content");
+
+                    b.Property<DateTime>("CreateTime");
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("Ip");
+
+                    b.Property<long?>("ParentId");
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("Url");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogId");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("Comment");
+                });
+
+            modelBuilder.Entity("SyZeroBlog.Core.BlogManagement.Tags.Tag", b =>
                 {
                     b.Property<long>("Id");
 
@@ -160,7 +191,7 @@ namespace SyZeroBlog.EntityFrameworkCore.Migrations
                     b.ToTable("Tag");
                 });
 
-            modelBuilder.Entity("SyZeroBlog.Core.File.File", b =>
+            modelBuilder.Entity("SyZeroBlog.Core.Files.File", b =>
                 {
                     b.Property<long>("Id");
 
@@ -186,9 +217,51 @@ namespace SyZeroBlog.EntityFrameworkCore.Migrations
                     b.ToTable("File");
                 });
 
-            modelBuilder.Entity("SyZeroBlog.Core.BlogManagement.Blog.Blog", b =>
+            modelBuilder.Entity("SyZeroBlog.Core.Links.Link", b =>
                 {
-                    b.HasOne("SyZeroBlog.Core.BlogManagement.Category.BlogCategory", "Category")
+                    b.Property<long>("Id");
+
+                    b.Property<string>("Description");
+
+                    b.Property<bool>("IsHide");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("Order");
+
+                    b.Property<string>("Url");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Link");
+                });
+
+            modelBuilder.Entity("SyZeroBlog.Core.Navigations.Navigation", b =>
+                {
+                    b.Property<long>("Id");
+
+                    b.Property<bool>("IsHide");
+
+                    b.Property<bool>("IsNewTab");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("Order");
+
+                    b.Property<long?>("ParentId");
+
+                    b.Property<string>("Url");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("Navigation");
+                });
+
+            modelBuilder.Entity("SyZeroBlog.Core.BlogManagement.Blogs.Blog", b =>
+                {
+                    b.HasOne("SyZeroBlog.Core.BlogManagement.Categorys.BlogCategory", "Category")
                         .WithMany("Blogs")
                         .HasForeignKey("CategoryId");
 
@@ -199,30 +272,49 @@ namespace SyZeroBlog.EntityFrameworkCore.Migrations
 
             modelBuilder.Entity("SyZeroBlog.Core.BlogManagement.BlogTag", b =>
                 {
-                    b.HasOne("SyZeroBlog.Core.BlogManagement.Blog.Blog", "Blog")
+                    b.HasOne("SyZeroBlog.Core.BlogManagement.Blogs.Blog", "Blog")
                         .WithMany("BlogTags")
                         .HasForeignKey("BlogId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("SyZeroBlog.Core.BlogManagement.Tag.Tag", "Tag")
+                    b.HasOne("SyZeroBlog.Core.BlogManagement.Tags.Tag", "Tag")
                         .WithMany("BlogTags")
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("SyZeroBlog.Core.BlogManagement.Category.BlogCategory", b =>
+            modelBuilder.Entity("SyZeroBlog.Core.BlogManagement.Categorys.BlogCategory", b =>
                 {
-                    b.HasOne("SyZeroBlog.Core.BlogManagement.Category.BlogCategory", "Parent")
+                    b.HasOne("SyZeroBlog.Core.BlogManagement.Categorys.BlogCategory", "Parent")
                         .WithMany("Childs")
-                        .HasForeignKey("Pid");
+                        .HasForeignKey("ParentId");
                 });
 
-            modelBuilder.Entity("SyZeroBlog.Core.File.File", b =>
+            modelBuilder.Entity("SyZeroBlog.Core.BlogManagement.Comments.Comment", b =>
+                {
+                    b.HasOne("SyZeroBlog.Core.BlogManagement.Blogs.Blog", "Blog")
+                        .WithMany("Comments")
+                        .HasForeignKey("BlogId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SyZeroBlog.Core.BlogManagement.Comments.Comment", "Parent")
+                        .WithMany("Childs")
+                        .HasForeignKey("ParentId");
+                });
+
+            modelBuilder.Entity("SyZeroBlog.Core.Files.File", b =>
                 {
                     b.HasOne("SyZeroBlog.Core.Authorization.Users.User", "CreateUser")
                         .WithOne("HeadPicture")
-                        .HasForeignKey("SyZeroBlog.Core.File.File", "CreateUserId")
+                        .HasForeignKey("SyZeroBlog.Core.Files.File", "CreateUserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SyZeroBlog.Core.Navigations.Navigation", b =>
+                {
+                    b.HasOne("SyZeroBlog.Core.Navigations.Navigation", "Parent")
+                        .WithMany("Childs")
+                        .HasForeignKey("ParentId");
                 });
 #pragma warning restore 612, 618
         }
