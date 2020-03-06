@@ -65,8 +65,10 @@ namespace SyZeroBlog.Web
                   };
             });
             services.Replace(ServiceDescriptor.Transient<IControllerActivator, ServiceBasedControllerActivator>());
-         
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddMvcOptions(options => {
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddMvcOptions(options =>
+            {
+                options.Filters.Add(new SyZeroBlog.Web.Core.Authentication.AppVerificationFilter());
                 options.Filters.Add(new SyZeroBlog.Web.Core.Authentication.AppExceptionFilter());
                 options.Filters.Add(new SyZeroBlog.Web.Core.Authentication.AppResultFilter());
             }).AddJsonOptions(options =>
@@ -128,7 +130,6 @@ namespace SyZeroBlog.Web
             });
             #endregion
 
-
             return services.AddSyZeroAutofac(AutofacServices);
         }
 
@@ -150,6 +151,8 @@ namespace SyZeroBlog.Web
             builder.RegisterModule(new Log4NetModule());
             //注入Redis
             builder.RegisterModule(new RedisModule(Configuration));
+            //注入公共层
+            builder.RegisterModule(new CommonModule());
         }
 
 
@@ -180,8 +183,6 @@ namespace SyZeroBlog.Web
                 c.RoutePrefix = string.Empty;
 
             });
-
-          
 
         }
     }

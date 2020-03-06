@@ -20,6 +20,8 @@ using SyZero.Cache;
 using SyZero.Logger;
 using SyZero.Web.Common;
 using SyZeroBlog.Web.Core.Authentication;
+using SyZero.Runtime.Security;
+using SyZero.Runtime.Session;
 
 namespace SyZeroBlog.Web.Core.Controllers
 {
@@ -29,6 +31,7 @@ namespace SyZeroBlog.Web.Core.Controllers
         private LoginManager _loginManager;
         private AccountService _accountService;
         private readonly ISyEncode _syEncode;
+
         public TokenAuthController(LoginManager loginManager, AccountService accountService, ISyEncode syEncode)
         {
             _loginManager = loginManager;
@@ -55,8 +58,8 @@ namespace SyZeroBlog.Web.Core.Controllers
                 throw new MessageBox("请使用管理员账号登录！");
             }
             var claims = new[] {
-                            new Claim("username",login.username),
-                            new Claim("id",user.Id.ToString())
+                            new Claim(SyClaimTypes.UserName,login.username),
+                            new Claim(SyClaimTypes.UserId,user.Id.ToString())
                         };
             
             var accessToken = await Task.Run(() => CreateAccessToken(claims));
@@ -74,7 +77,7 @@ namespace SyZeroBlog.Web.Core.Controllers
         [ApiCheckTokenFilter]
         public async Task<bool> LogOut()
         {
-            await Cache.RemoveAsync(User.Id.ToString());
+            await Cache.RemoveAsync(SySession.UserId.ToString());
             return true;
         }
 

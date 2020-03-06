@@ -18,7 +18,7 @@ namespace SyZeroBlog.Application.Authorization.Accounts
 
         private readonly ISyEncode _syEncode;
        
-        public AccountService(RegistrationManager registrationManager, ISyEncode syEncode)
+        public AccountService(RegistrationManager registrationManager,ISyEncode syEncode)
         {
             _registrationManager = registrationManager;
             _syEncode = syEncode;
