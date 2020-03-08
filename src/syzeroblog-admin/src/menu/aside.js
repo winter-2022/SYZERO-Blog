@@ -5,7 +5,7 @@ export default [
     title: '分类管理',
     icon: 'folder-o',
     children: [
-      { path: '/admin/page2', title: '分类列表' }
+      { path: '/admin/BlogCategory', title: '分类列表' }
     ]
   },
   {

@@ -22,6 +22,15 @@ const frameIn = [
         },
         component: _import('system/admin')
       },
+      {
+        path: 'BlogCategory',
+        name: 'BlogCategory',
+        meta: {
+          title: '博客分类',
+          auth: true
+        },
+        component: _import('admin/BlogCategory')
+      },
       // 演示页面
       {
         path: 'page1',
@@ -30,7 +39,7 @@ const frameIn = [
           title: '页面 1',
           auth: true
         },
-        component: _import('demo/page1')
+        component: _import('admin/page1')
       },
       {
         path: 'page2',
@@ -39,7 +48,7 @@ const frameIn = [
           title: '页面 2',
           auth: true
         },
-        component: _import('demo/page2')
+        component: _import('admin/page2')
       },
       {
         path: 'page3',
@@ -48,7 +57,7 @@ const frameIn = [
           title: '页面 3',
           auth: true
         },
-        component: _import('demo/page3')
+        component: _import('admin/page3')
       },
       // 系统 前端日志
       {
