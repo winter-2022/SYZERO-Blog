@@ -32,12 +32,7 @@ namespace SyZeroBlog.Web.Core.Authentication
         public override void OnActionExecuting(ActionExecutingContext context)
         {
 
-            ////得到Controller对象
-            var _Controller = context.Controller as SyZeroBlog.Web.Core.Controllers.BaseApiController;
-
-
-            var tenantIdClaim = _Controller.User?.Claims.FirstOrDefault(c => c.Type == SyClaimTypes.UserId);
-            if (string.IsNullOrEmpty(tenantIdClaim?.Value))
+            if (context.HttpContext.User == null)
                 throw new MessageBox(new { code = EMessageBoxStatus.接口授权码无效.ToInt32(), msg = $"{EMessageBoxStatus.接口授权码无效.ToString()}" });
 
         }

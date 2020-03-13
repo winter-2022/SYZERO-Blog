@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.IdentityModel.Tokens;
 using SyZeroBlog.Core.Configuration;
@@ -29,10 +30,8 @@ namespace SyZeroBlog.Web.Core.Authentication
 
                 if (Principal != null)
                 {
-                    var _Controller = context.Controller as SyZeroBlog.Web.Core.Controllers.BaseApiController;
-
                     Thread.CurrentPrincipal = Principal;
-                    _Controller.ControllerContext.HttpContext.User = Principal;
+                    context.HttpContext.User = Principal;
                 }
             }
         }
