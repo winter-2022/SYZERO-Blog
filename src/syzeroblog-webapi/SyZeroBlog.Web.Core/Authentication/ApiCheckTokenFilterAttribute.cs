@@ -14,6 +14,7 @@ using SyZeroBlog.Core.Authorization.Users;
 using SyZero.Cache;
 using SyZero;
 using SyZero.Runtime.Security;
+using SyZero.Runtime.Entities;
 
 namespace SyZeroBlog.Web.Core.Authentication
 {
@@ -33,7 +34,7 @@ namespace SyZeroBlog.Web.Core.Authentication
         {
 
             if (context.HttpContext.User == null)
-                throw new MessageBox(new { code = EMessageBoxStatus.接口授权码无效.ToInt32(), msg = $"{EMessageBoxStatus.接口授权码无效.ToString()}" });
+                throw new SyMessageBox(new { code = SyMessageBoxStatus.接口授权码无效.ToInt32(), msg = $"{SyMessageBoxStatus.接口授权码无效.ToString()}" });
 
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using SyZero.Runtime.Entities;
 
 namespace SyZeroBlog.Web.Core.Models
 {
@@ -13,7 +14,7 @@ namespace SyZeroBlog.Web.Core.Models
         /// <param name="msgStatus"></param>
         public ResultModel(object Data)
         {
-            this.code = (int)EMessageBoxStatus.成功;
+            this.code = (int)SyMessageBoxStatus.成功;
             this.data = Data;
         }
 

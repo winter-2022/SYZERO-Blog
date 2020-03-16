@@ -8,5 +8,10 @@ namespace SyZeroBlog.Application.BlogManagement.Blogs.Dto
     public class BlogDto :EntityDto
     {
         public string Title { get; set; }
+
+        public string Alias { get; set; }
+
+
+
     }
 }

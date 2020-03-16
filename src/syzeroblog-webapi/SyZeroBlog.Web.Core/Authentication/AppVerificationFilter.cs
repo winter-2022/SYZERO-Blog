@@ -69,7 +69,7 @@ namespace SyZeroBlog.Web.Core.Authentication
                 return tokenHandler.ValidateToken(token, validationParameters, out securityToken);
             }
 
-            catch (Exception ex)
+            catch
             {
                 return null;
             }

@@ -22,6 +22,7 @@ using SyZero.Web.Common;
 using SyZeroBlog.Web.Core.Authentication;
 using SyZero.Runtime.Security;
 using SyZero.Runtime.Session;
+using SyZero.Runtime.Entities;
 
 namespace SyZeroBlog.Web.Core.Controllers
 {
@@ -51,11 +52,11 @@ namespace SyZeroBlog.Web.Core.Controllers
             var user = await _loginManager.loginResult(login.username, _syEncode.Get32MD5One(login.password));
             if (user==null)
             {
-                throw new MessageBox("密码或账号不正确！");
+                throw new SyMessageBox("密码或账号不正确！");
             }
             if (user.Level != 1)
             {
-                throw new MessageBox("请使用管理员账号登录！");
+                throw new SyMessageBox("请使用管理员账号登录！");
             }
             var claims = new[] {
                             new Claim(SyClaimTypes.UserName,login.username),

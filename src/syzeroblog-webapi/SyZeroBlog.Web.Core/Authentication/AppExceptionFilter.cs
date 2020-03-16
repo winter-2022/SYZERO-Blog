@@ -5,7 +5,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-
+using SyZero.Runtime.Entities;
 using SyZeroBlog.Core.Configuration;
 using SyZeroBlog.Web.Core.Models;
 
@@ -22,12 +22,12 @@ namespace SyZeroBlog.Web.Core.Authentication
         {
           
             var _Exception = context.Exception;
-            if (_Exception is MessageBox _Error)
+            if (_Exception is SyMessageBox _Error)
             {
                 context.ExceptionHandled = true;
                 context.HttpContext.Response.StatusCode = 200;
 
-                if (_Error.Model.code == (int)EMessageBoxStatus.自定义)
+                if (_Error.Model.code == (int)SyMessageBoxStatus.自定义)
                     context.Result = new JsonResult(_Error.Model.msg);
                 else
                     context.Result = new JsonResult(_Error.Model);
@@ -35,7 +35,7 @@ namespace SyZeroBlog.Web.Core.Authentication
             else
             {
                // Tools.Log.Write(_Exception, context.HttpContext.Connection.RemoteIpAddress.ToString());//nlog 写入日志到 txt
-                var _MessageBoxModel = new MessageBoxModel($"服务端出现异常![异常消息：{_Exception.Message}]", EMessageBoxStatus.服务端异常);
+                var _MessageBoxModel = new SyMessageBoxModel($"服务端出现异常![异常消息：{_Exception.Message}]", SyMessageBoxStatus.服务端异常);
                 context.Result = new JsonResult(_MessageBoxModel);
             }
         }

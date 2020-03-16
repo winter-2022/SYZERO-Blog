@@ -15,187 +15,244 @@
       :options="options"
       @row-edit="handleRowEdit"
       @row-add="handleRowAdd"
-      @row-remove="handleRowRemove"
       @dialog-cancel="handleDialogCancel"
+      @custom-edit="editRow"
+      @custom-delete="handleRowRemove"
     >
-      <el-button slot="header" style="margin-bottom: 5px" @click="addRow"
-        >添加分类</el-button
-      >
+      <el-button slot="header" style="margin-bottom: 5px" @click="addRow">添加分类</el-button>
     </d2-crud>
   </d2-container>
 </template>
 
 <script>
+import {
+  GetBlogCategory,
+  AddBlogCategory,
+  UpdataBlogCategory,
+  DelBlogCategory
+} from "../../../api/BlogCategory";
 export default {
-  data () {
+  data() {
     return {
       columns: [
         {
-          title: '排序',
-          key: 'order',
-          width: '80',
+          title: "排序",
+          key: "order",
+          width: "80",
           sortable: true,
-          align: 'center'
+          align: "center"
         },
         {
-          title: '名称',
-          key: 'name',
-          width: '200'
+          title: "名称",
+          key: "name",
+          width: "200"
         },
         {
-          title: '描述',
-          key: 'describe'
+          title: "描述",
+          key: "describe"
         },
         {
-          title: '别名',
-          key: 'alias',
-          width: '180'
+          title: "别名",
+          key: "alias",
+          width: "180"
         },
         {
-          title: '文章',
-          key: 'blognum',
-          width: '80',
+          title: "文章",
+          key: "blognum",
+          width: "80",
           sortable: true,
-          align: 'center'
+          align: "center"
         }
       ],
       data: [
         {
-          describe: '2016-05-02',
-          name: '成为',
-          alias: 'efe',
+          describe: "2016-05-02",
+          name: "成为",
+          alias: "efe",
           blognum: 5,
           order: 0
         },
         {
-          describe: '额wv个啊本人啊别让他人不',
-          name: '问过',
-          alias: 'wer',
+          describe: "额wv个啊本人啊别让他人不",
+          name: "问过",
+          alias: "wer",
           blognum: 2,
           order: 0
         },
         {
-          describe: '2016-05-01',
-          name: '王小虎',
-          alias: 'we',
+          describe: "2016-05-01",
+          name: "王小虎",
+          alias: "we",
           blognum: 4,
           order: 0
         }
       ],
       rowHandle: {
-        columnHeader: '编辑表格',
-        width: '240',
-        edit: {
-          icon: 'el-icon-edit',
-          text: '编辑',
-          size: 'small'
-        },
-        remove: {
-          icon: 'el-icon-delete',
-          text: '删除',
-          size: 'small'
-        }
+        columnHeader: "操作",
+        width: "240",
+        custom: [
+          {
+            icon: "el-icon-edit",
+            emit: "custom-edit",
+            text: "编辑",
+            size: "small",
+            type: "primary"
+          },
+          {
+            icon: "el-icon-delete",
+            emit: "custom-delete",
+            text: "删除",
+            size: "small",
+            type: "danger"
+          }
+        ]
       },
       editTemplate: {
         name: {
-          title: '名称',
-          value: ''
+          title: "名称",
+          value: ""
         },
         alias: {
-          title: '别名',
-          value: ''
+          title: "别名",
+          value: ""
         },
-        parentid: {
-          title: '父分类',
-          value: '',
+        parentId: {
+          title: "父分类",
+          value: "",
           component: {
-            name: 'el-select',
-            options: [{ label: '无', value: '' }]
+            name: "el-select",
+            options: [{ label: "无", value: "" }]
           }
         },
         describe: {
-          title: '描述',
-          value: '',
+          title: "描述",
+          value: "",
           component: {}
         },
         order: {
-          title: '排序',
-          value: '',
+          title: "排序",
+          value: "",
           component: {
-            name: 'el-input-number'
+            name: "el-input-number"
           }
         }
       },
       formOptions: {
-        labelWidth: '80px',
-        labelPosition: 'left',
+        labelWidth: "80px",
+        labelPosition: "left",
         saveLoading: false
       },
       formRules: {
-        name: [{ required: true, message: '请输入名称', trigger: 'blur' }]
+        name: [{ required: true, message: "请输入名称", trigger: "blur" }]
       },
       options: {
         border: true
       }
-    }
+    };
+  },
+  mounted() {
+    GetBlogCategory().then(res => {
+      this.data = res.list;
+    });
   },
   methods: {
-    addRow () {
-      this.$refs.d2Crud.showDialog({
-        mode: 'add'
-      })
+    addRow() {
+      GetBlogCategory().then(res => {
+        let options = [{ label: "最上级", value: null }];
+        options = options.concat(
+          res.list
+            .filter(p => {
+              return p.parentId == null;
+            })
+            .map(p => {
+              return { label: p.name, value: p.id };
+            })
+        );
+        this.editTemplate.parentId.component.options = options;
+        this.$refs.d2Crud.showDialog({
+          mode: "add"
+        });
+      });
     },
-    handleRowAdd (row, done) {
-      this.formOptions.saveLoading = true
-      setTimeout(() => {
-        console.log(row)
-        this.$message({
-          message: '保存成功',
-          type: 'success'
+    editRow({ index, row }) {
+      GetBlogCategory().then(res => {
+        let options = [{ label: "最上级", value: null }];
+        options = options.concat(
+          res.list
+            .filter(p => {
+              return p.parentId == null;
+            })
+            .map(p => {
+              return { label: p.name, value: p.id };
+            })
+        );
+        this.editTemplate.parentId.component.options = options;
+        this.$refs.d2Crud.showDialog({
+          mode: "edit",
+          rowIndex: index
+        });
+      });
+    },
+    handleRowRemove({ index, row }) {
+      this.$refs.d2Crud.removeRow({
+        index: index
+      });
+      this.$confirm("确定删除吗？", "删除", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          DelBlogCategory(row.id).then(res => {
+            this.$message({
+              message: "删除成功",
+              type: "success"
+            });
+            this.data.splice(index, 1);
+          });
         })
-
-        // done可以传入一个对象来修改提交的某个字段
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
+    handleRowAdd(row, done) {
+      this.formOptions.saveLoading = true;
+      AddBlogCategory(row).then(res => {
+        console.log(res);
+        this.$message({
+          message: "保存成功",
+          type: "success"
+        });
         done({
           blognum: 0
-        })
-        this.formOptions.saveLoading = false
-      }, 300)
+        });
+        this.formOptions.saveLoading = false;
+      });
     },
-    handleRowEdit ({ index, row }, done) {
-      this.formOptions.saveLoading = true
-      setTimeout(() => {
-        console.log(index)
-        console.log(row)
+    handleRowEdit({ index, row }, done) {
+      this.formOptions.saveLoading = true;
+      UpdataBlogCategory(row).then(res => {
+        console.log(res);
         this.$message({
-          message: '编辑成功',
-          type: 'success'
-        })
-
-        // done可以传入一个对象来修改提交的某个字段
+          message: "编辑成功",
+          type: "success"
+        });
         done({
-          address: '我是通过done事件传入的数据！'
-        })
-        this.formOptions.saveLoading = false
-      }, 300)
+          blognum: 0
+        });
+        this.formOptions.saveLoading = false;
+      }, 300);
     },
-    handleRowRemove ({ index, row }, done) {
-      setTimeout(() => {
-        console.log(index)
-        console.log(row)
-        this.$message({
-          message: '删除成功',
-          type: 'success'
-        })
-        done()
-      }, 300)
-    },
-    handleDialogCancel (done) {
+    handleDialogCancel(done) {
       this.$message({
-        message: '取消保存',
-        type: 'warning'
-      })
-      done()
+        message: "取消保存",
+        type: "warning"
+      });
+      done();
     }
   }
-}
+};
 </script>
