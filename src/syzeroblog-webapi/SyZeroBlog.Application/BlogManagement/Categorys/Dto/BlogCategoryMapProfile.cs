@@ -11,8 +11,10 @@ namespace SyZeroBlog.Application.BlogManagement.Categorys.Dto
         public BlogCategoryMapProfile()
         {
             CreateMap<BlogCategoryDto, BlogCategory>();
-            CreateMap<BlogCategory, BlogCategoryDto>();
+            CreateMap<BlogCategory, BlogCategoryDto>().BeforeMap((entry, dto) => { dto.blognum = entry.Blogs == null?0: entry.Blogs.Count; });
 
+            CreateMap<CreateBlogCategoryDto, BlogCategory>();
+            CreateMap<BlogCategory, CreateBlogCategoryDto>();
         }
     }
 }

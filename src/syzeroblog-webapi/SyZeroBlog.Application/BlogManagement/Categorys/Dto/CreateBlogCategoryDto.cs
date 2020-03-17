@@ -5,7 +5,7 @@ using SyZero.Application.Service.Dto;
 
 namespace SyZeroBlog.Application.BlogManagement.Categorys.Dto
 {
-    public class BlogCategoryDto : EntityDto
+    public class CreateBlogCategoryDto : EntityDto
     {
         /// <summary>
         /// 名称
@@ -28,14 +28,6 @@ namespace SyZeroBlog.Application.BlogManagement.Categorys.Dto
         /// </summary>
         public long? ParentId { get; set; }
 
-        /// <summary>
-        /// 下级
-        /// </summary>
-        public virtual ICollection<BlogCategoryDto> Childs { get; set; }
-
-        /// <summary>
-        /// 文章数量
-        /// </summary>
-        public int blognum { get; set; } = 0;
+ 
     }
 }

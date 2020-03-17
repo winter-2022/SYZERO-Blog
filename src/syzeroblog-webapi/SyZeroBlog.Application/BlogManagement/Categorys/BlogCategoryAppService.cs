@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SyZero;
@@ -12,7 +13,7 @@ using SyZeroBlog.Core.BlogManagement.Categorys;
 
 namespace SyZeroBlog.Application.BlogManagement.Categorys
 {
-    public class BlogCategoryAppService : AsyncCrudAppService<BlogCategory, BlogCategoryDto>, IBlogCategoryAppService
+    public class BlogCategoryAppService : AsyncCrudAppService<BlogCategory, BlogCategoryDto, PageAndSortQueryDto,CreateBlogCategoryDto>, IBlogCategoryAppService
     {
         private readonly IRepository<BlogCategory> _blogCateRepository;
 
@@ -22,20 +23,19 @@ namespace SyZeroBlog.Application.BlogManagement.Categorys
         }
 
       
-        public override Task<PageResultDto<BlogCategoryDto>> GetAll(PageAndSortQueryDto input)
+        public override async Task<PageResultDto<BlogCategoryDto>> GetAll(PageAndSortQueryDto input)
         {
           
-            if (SySession.UserId == null)
-            {
-                throw new SyMessageBox(new { code = SyMessageBoxStatus.接口授权码无效.ToInt32(), msg = $"{SyMessageBoxStatus.接口授权码无效.ToString()}" });
-            }
-            return base.GetAll(input);
+        
+            var pp = await base.GetAll(input);
+            pp.list = pp.list.Where(p => p.ParentId == null).ToList();
+            return pp;
         }
 
-        public override Task<BlogCategoryDto> Create(BlogCategoryDto input)
-        {
-            return base.Create(input);
-        }
+        //public override Task<BlogCategoryDto> Create(BlogCategoryDto input)
+        //{
+        //    return base.Create(input);
+        //}
 
   
     }
