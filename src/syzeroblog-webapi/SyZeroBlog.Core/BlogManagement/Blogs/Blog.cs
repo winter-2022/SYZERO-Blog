@@ -56,7 +56,7 @@ namespace SyZeroBlog.Core.BlogManagement.Blogs
         /// <summary>
         /// 是否顶置
         /// </summary>
-        public bool IsTop { get; set; }
+        public bool IsTop { get; set; } = false;
         /// <summary>
         /// 排序
         /// </summary>

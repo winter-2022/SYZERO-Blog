@@ -4,47 +4,43 @@ using System.Text;
 using SyZero.Application.Service.Dto;
 using SyZeroBlog.Application.BlogManagement.Categorys.Dto;
 using SyZeroBlog.Application.Users.Dto;
-using SyZeroBlog.Core.Authorization.Users;
 
 namespace SyZeroBlog.Application.BlogManagement.Blogs.Dto
 {
-    public class BlogDto :EntityDto
+    public class CreateBlogDto : EntityDto
     {
         /// <summary>
         /// 标题
         /// </summary>
         public string Title { get; set; }
         /// <summary>
-        /// 别名
+        /// 内容
         /// </summary>
-        public string Alias { get; set; }
+        public string Content { get; set; }
         /// <summary>
-        /// 作者
+        /// 描述
         /// </summary>
-        public long? CreateUserId { get; set; }
+        public string Describe { get; set; }
         /// <summary>
-        /// 作者
-        /// </summary>
-        public string CreateUserName { get; set; }
-        /// <summary>
-        /// 分类
+        /// 分类Id
         /// </summary>
         public long? CategoryId { get; set; }
         /// <summary>
-        /// 分类
+        /// 模板
         /// </summary>
-        public string CategoryName { get; set; }
+        public string Template { get; set; }
         /// <summary>
-        /// 创建时间
+        /// 是否顶置
         /// </summary>
-        public DateTime CreateTime { get; set; }
+        public bool IsTop { get; set; } = false;
         /// <summary>
-        /// 评论数
+        /// 排序
         /// </summary>
-        public int CommentNums { get; set; }
+        public int Order { get; set; } = 0;
         /// <summary>
-        /// 查看次数
+        /// 别名
         /// </summary>
-        public int ViewNums { get; set; }
+        public string Alias { get; set; }
+     
     }
 }

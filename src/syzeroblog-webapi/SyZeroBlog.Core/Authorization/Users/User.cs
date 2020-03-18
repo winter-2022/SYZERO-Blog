@@ -18,5 +18,7 @@ namespace SyZeroBlog.Core.Authorization.Users
         public virtual File HeadPicture { get; set; }
 
 
+
+
     }
 }

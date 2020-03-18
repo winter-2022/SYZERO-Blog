@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,18 +26,13 @@ namespace SyZeroBlog.Application.BlogManagement.Categorys
       
         public override async Task<PageResultDto<BlogCategoryDto>> GetAll(PageAndSortQueryDto input)
         {
-          
-        
+
             var pp = await base.GetAll(input);
             pp.list = pp.list.Where(p => p.ParentId == null).ToList();
             return pp;
         }
 
-        //public override Task<BlogCategoryDto> Create(BlogCategoryDto input)
-        //{
-        //    return base.Create(input);
-        //}
-
+    
   
     }
 }

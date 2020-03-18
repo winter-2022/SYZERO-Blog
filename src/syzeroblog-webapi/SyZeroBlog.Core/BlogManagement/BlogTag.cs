@@ -9,9 +9,9 @@ namespace SyZeroBlog.Core.BlogManagement
     public class BlogTag
     {
         public long BlogId { get; set; }
-        public Blog Blog { get; set; }
+        public virtual Blog Blog { get; set; }
 
         public long TagId { get; set; }
-        public Tag Tag { get; set; }
+        public virtual Tag Tag { get; set; }
     }
 }

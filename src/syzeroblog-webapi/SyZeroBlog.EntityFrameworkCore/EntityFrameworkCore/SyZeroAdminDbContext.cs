@@ -19,11 +19,12 @@ namespace SyZeroBlog.EntityFrameworkCore
     {
         public SyZeroBlogDbContext()
         {
+           
         }
 
         public SyZeroBlogDbContext(DbContextOptions<SyZeroBlogDbContext> options) : base(options)
         {
-
+            
         }
         public DbSet<File> File { get; set; }
         public DbSet<BlogCategory> BlogCategory { get; set; }
@@ -32,6 +33,11 @@ namespace SyZeroBlog.EntityFrameworkCore
         public DbSet<Comment>  Comment { get; set; }
         public DbSet<Navigation> Navigation { get; set; }
         public DbSet<Link> Link { get; set; }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+        }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -79,5 +85,7 @@ namespace SyZeroBlog.EntityFrameworkCore
                 .WithOne(t => t.Parent)
                 .HasForeignKey(t => t.ParentId);
         }
+
+      
     }
 }
