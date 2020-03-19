@@ -127,7 +127,7 @@ export default {
   methods: {
     // 加载数据
     loadData () {
-      GetBlogCategory().then(res => {
+      GetBlogCategory({ Sort: 'order' }).then(res => {
         this.data = res.list
       })
     },

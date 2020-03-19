@@ -3,10 +3,11 @@ import request from '@/plugin/axios'
 /**
  * 获取所有博客分类
  */
-export function GetBlogCategory() {
+export function GetBlogCategory(params) {
   return request({
     url: '/Service/BlogCategory/All',
-    method: 'get'
+    method: 'get',
+    params
   })
 }
 
