@@ -11,6 +11,17 @@ export function GetBlog (params) {
 }
 
 /**
+ * 添加博客
+ */
+export function AddBlog(data) {
+  return request({
+    url: '/Service/Blog',
+    method: 'post',
+    data
+  })
+}
+
+/**
  * 删除博客分类
  */
 export function DelBlog (Id) {

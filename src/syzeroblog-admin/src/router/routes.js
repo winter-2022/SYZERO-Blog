@@ -33,6 +33,15 @@ const frameIn = [{
       component: _import('admin/BlogCategory')
     },
     {
+      path: 'Tag',
+      name: 'Tag',
+      meta: {
+        title: '标签列表',
+        auth: true
+      },
+      component: _import('admin/Tag')
+    },
+    {
       path: 'Blog',
       name: 'Blog',
       meta: {

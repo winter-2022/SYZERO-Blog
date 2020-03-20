@@ -16,7 +16,7 @@ export default [{
   title: '文章管理',
   icon: 'folder-o',
   children: [{
-    path: '/admin/BlogEdit',
+    path: '/admin/BlogEdit/new',
     title: '添加文章'
   },
   {
@@ -39,6 +39,10 @@ export default [{
   {
     path: '/admin/page1',
     title: '留言列表'
+  },
+  {
+    path: '/admin/Tag',
+    title: '标签列表'
   }
   ]
 },

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using SyZero.Application.Service.Dto;
 using SyZeroBlog.Application.BlogManagement.Categorys.Dto;
+using SyZeroBlog.Application.BlogManagement.Tags.Dto;
 using SyZeroBlog.Application.Users.Dto;
 
 namespace SyZeroBlog.Application.BlogManagement.Blogs.Dto
@@ -25,10 +26,23 @@ namespace SyZeroBlog.Application.BlogManagement.Blogs.Dto
         /// 分类Id
         /// </summary>
         public long? CategoryId { get; set; }
+
+        /// <summary>
+        /// 状态
+        /// </summary>
+        public int Status { get; set; }
         /// <summary>
         /// 模板
         /// </summary>
         public string Template { get; set; }
+        /// <summary>
+        /// 标签
+        /// </summary>
+        public  List<string> Tags { get; set; }
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime CreateTime { get; set; }
         /// <summary>
         /// 是否顶置
         /// </summary>
