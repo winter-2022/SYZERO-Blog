@@ -22,7 +22,7 @@
             <el-cascader
               :options="data.cateOptions"
               :props="data.cateProps"
-              v-model="cate"
+              v-model="data.form.categoryId"
               clearable
               class="sy-select"
             ></el-cascader>
@@ -99,7 +99,7 @@
 </template>
 
 <script>
-import { AddBlog } from '../../../api/Blog'
+import { AddBlog, UpdataBlog, GetBlogDetail } from '../../../api/Blog'
 import { GetBlogCategory } from '../../../api/BlogCategory'
 import { GetTag } from '../../../api/Tag'
 export default {
@@ -123,13 +123,14 @@ export default {
           value: 'id',
           label: 'name',
           children: 'childs',
-          checkStrictly: true
+          checkStrictly: true,
+          emitPath: false
         },
         cateOptions: [],
         tagOptions: [],
         form: {
           title: '',
-          content: '2222',
+          content: '',
           describe: '',
           categoryId: null,
           status: 0,
@@ -150,54 +151,46 @@ export default {
       }
     }
   },
-  mounted () {
+  created () {
     this.loadData()
-    GetBlogCategory({ Sort: 'order' }).then(res => {
-      this.data.cateOptions = res.list
-    })
-    GetTag({ Sort: 'order' }).then(res => {
-      this.data.tagOptions = res.list
-    })
   },
-  computed: {
-    // tags: {
-    //   get: function () {
-    //     return this.data.form.blogTags.map(p => {
-    //       return p.id
-    //     })
-    //   },
-    //   set: function (value) {
-    //     console.log(value)
-    //     this.data.form.blogTags = value.map(p => {
-    //       return { id: p }
-    //     })
-    //   }
-    // },
-    cate: {
-      get: function () {
-        return [].push(this.data.form.categoryId)
-      },
-      set: function (value) {
-        this.data.form.categoryId = value.join('')
-      }
-    }
-  },
+  computed: {},
   methods: {
     // 加载数据
     loadData () {
       this.data.Id = this.$route.params.id
       this.data.config.uniqueId = this.data.Id
       console.log(this.$route.params.id)
-      if (!this.data.Id) {
+      if (this.data.Id === 'new') {
         this.data.title = '新增文章'
+      } else {
+        let id = this.$route.params.id
+        GetBlogDetail(id).then(res => {
+          res.tags = res.tags.map(p => {
+            return p.id
+          })
+          this.data.form = res
+        })
       }
-    },
-    // 添加
-    saveBlog () {
-      console.log(JSON.stringify(this.data.form))
-      AddBlog(this.data.form).then(res => {
-        console.log(res)
+      GetBlogCategory({ Sort: 'order' }).then(res => {
+        this.data.cateOptions = res.list
       })
+      GetTag({ Sort: 'order' }).then(res => {
+        this.data.tagOptions = res.list
+      })
+    },
+    // 保存
+    saveBlog () {
+      if (this.data.form.id) {
+        UpdataBlog(this.data.form).then(res => {
+          console.log(res)
+        })
+      } else {
+        AddBlog(this.data.form).then(res => {
+          console.log(res)
+          this.data.form.id = res.id
+        })
+      }
     },
     switchData (id) {
       let data = this.datas[id]
@@ -213,13 +206,13 @@ export default {
             label: 'name',
             children: 'childs',
             checkStrictly: true,
-            expandTrigger: 'hover'
+            emitPath: false
           },
           cateOptions: [],
           tagOptions: [],
           form: {
             title: '',
-            content: '2222',
+            content: '',
             describe: '',
             categoryId: null,
             status: 0,
@@ -248,7 +241,10 @@ export default {
     const id = to.params.id
     console.log(id)
     if (id) {
-      next(instance => instance.switchData(id))
+      next(instance => {
+        instance.switchData(id)
+        instance.loadData()
+      })
     } else {
       next(new Error('未指定ID'))
     }

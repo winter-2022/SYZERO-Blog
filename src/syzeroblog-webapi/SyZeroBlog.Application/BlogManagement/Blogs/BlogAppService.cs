@@ -11,10 +11,13 @@ using SyZeroBlog.Core.Authorization.Users;
 using SyZeroBlog.Core.BlogManagement.Blogs;
 using SyZero.Runtime.Entities;
 using SyZero;
+using System.Linq;
+using System.Linq.Dynamic.Core;
+
 
 namespace SyZeroBlog.Application.BlogManagement.Blogs
 {
-    public class BlogAppService : AsyncCrudAppService<Blog, BlogDto, PageAndSortQueryDto,CreateBlogDto>, IBlogAppService
+    public class BlogAppService : AsyncCrudAppService<Blog, BlogDto, PageAndSortFilterQueryDto, CreateBlogDto>, IBlogAppService
     {
         private readonly IRepository<Blog>  _blogRepository;
         private readonly IRepository<User> _userRepository;
@@ -22,6 +25,30 @@ namespace SyZeroBlog.Application.BlogManagement.Blogs
         {
             _blogRepository = blogRepository;
             _userRepository = userRepository;
+        }
+
+        public override async Task<PageResultDto<BlogDto>> GetAll(PageAndSortFilterQueryDto input)
+        {
+            var query = await _blogRepository.GetListAsync();
+            if (input.CategoryId != null)
+            {
+                query = query.Where(p => p.Category.ParentId == input.CategoryId || p.Category.Id == input.CategoryId);
+            }
+            if (!String.IsNullOrEmpty(input.Key))
+            {
+                query = query.Where(p => p.Title.Contains(input.Key));
+            }
+            var totalCount = query.Count();
+
+            query = ApplySorting(query, input);
+            query = ApplyPaging(query, input);
+
+            var entities = query.ToList();
+
+            return new PageResultDto<BlogDto>(
+                totalCount,
+                entities.Select(MapToEntityDto).ToList()
+            );
         }
 
         public override async Task<BlogDto> Create(CreateBlogDto input)

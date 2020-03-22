@@ -27,7 +27,7 @@ const frameIn = [{
       path: 'BlogCategory',
       name: 'BlogCategory',
       meta: {
-        title: '博客分类',
+        title: '分类管理',
         auth: true
       },
       component: _import('admin/BlogCategory')
@@ -36,7 +36,7 @@ const frameIn = [{
       path: 'Tag',
       name: 'Tag',
       meta: {
-        title: '标签列表',
+        title: '标签管理',
         auth: true
       },
       component: _import('admin/Tag')
@@ -45,8 +45,9 @@ const frameIn = [{
       path: 'Blog',
       name: 'Blog',
       meta: {
-        title: '文章',
-        auth: true
+        title: '文章管理',
+        auth: true,
+        cache: true
       },
       component: _import('admin/Blog')
     },

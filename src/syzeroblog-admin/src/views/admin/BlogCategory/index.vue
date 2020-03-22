@@ -121,7 +121,7 @@ export default {
       formTitle: '添加'
     }
   },
-  mounted () {
+  created () {
     this.loadData()
   },
   methods: {

@@ -11,12 +11,35 @@ export function GetBlog (params) {
 }
 
 /**
+ * 获取所有博客分类
+ */
+export function GetBlogDetail (id) {
+  return request({
+    url: '/Service/Blog',
+    method: 'get',
+    params: {
+      id
+    }
+  })
+}
+
+/**
  * 添加博客
  */
-export function AddBlog(data) {
+export function AddBlog (data) {
   return request({
     url: '/Service/Blog',
     method: 'post',
+    data
+  })
+}
+/**
+ * 更新博客
+ */
+export function UpdataBlog (data) {
+  return request({
+    url: '/Service/Blog',
+    method: 'put',
     data
   })
 }
