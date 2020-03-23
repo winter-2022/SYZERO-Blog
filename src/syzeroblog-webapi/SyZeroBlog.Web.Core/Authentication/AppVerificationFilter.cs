@@ -22,6 +22,8 @@ namespace SyZeroBlog.Web.Core.Authentication
         /// <param name="context"></param>
         public void OnActionExecuting(ActionExecutingContext context)
         {
+            Thread.CurrentPrincipal = null;
+            context.HttpContext.User = null;
             if (context.HttpContext.Request.Headers.ContainsKey("Authorization"))
             {
                 string token = context.HttpContext.Request.Headers["Authorization"];
@@ -34,6 +36,7 @@ namespace SyZeroBlog.Web.Core.Authentication
                     context.HttpContext.User = Principal;
                 }
             }
+          
         }
 
         public void OnActionExecuted(ActionExecutedContext context)

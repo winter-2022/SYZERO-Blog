@@ -20,9 +20,11 @@ namespace SyZeroBlog.Core.Configuration
 
         public static T GetSection<T>(string key) where T : class, new()
         {
-            var obj = new ServiceCollection()
-                .AddOptions()
-                .Configure<T>(Configuration.GetSection(key))
+          
+                var obj = new ServiceCollection()
+                .AddOptions().Configure<T>(key,configureOptions=> {
+                   
+                })
                 .BuildServiceProvider()
                 .GetService<IOptions<T>>()
                 .Value;

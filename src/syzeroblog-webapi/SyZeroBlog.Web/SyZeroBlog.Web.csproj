@@ -1,23 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-    <AssemblyName>SyZeroBlog.Web</AssemblyName>
-    <RootNamespace>SyZeroBlog.Web</RootNamespace>
-    <Platforms>AnyCPU;x64</Platforms>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>E:\Project\SYZERO-Blog\src\syzeroblog-webapi\SyZeroBlog.Web\SyZeroBlog.Web.xml</DocumentationFile>
+    <DocumentationFile>E:\我的项目\SYZERO-Blog\src\syzeroblog-webapi\SyZeroBlog.Web\SyZeroBlog.Web.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.2" />
     <PackageReference Include="SyZero.Log4Net" Version="1.0.3" />
     <PackageReference Include="SyZero.Redis" Version="1.0.3" />
   </ItemGroup>
@@ -25,5 +17,6 @@
   <ItemGroup>
     <ProjectReference Include="..\SyZeroBlog.Web.Core\SyZeroBlog.Web.Core.csproj" />
   </ItemGroup>
+
 
 </Project>

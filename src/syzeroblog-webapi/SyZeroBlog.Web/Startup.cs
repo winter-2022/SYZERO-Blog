@@ -2,13 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using AutoMapper;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Newtonsoft.Json;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -16,21 +12,19 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SyZero;
 using SyZero.AspNetCore;
 using SyZero.AutoMapper;
-using SyZero.Domain.Repository;
-using SyZero.DynamicWebApi;
 using SyZero.Log4Net;
 using SyZero.Redis;
 using SyZero.Web.Common;
 using SyZeroBlog.EntityFrameworkCore;
-using SyZeroBlog.EntityFrameworkCore.Repositories;
-using SyZeroBlog.Web.Core.Controllers;
+using Microsoft.Extensions.DependencyModel;
+using System.Reflection;
+using Panda.DynamicWebApi;
 
 namespace SyZeroBlog.Web
 {
@@ -43,60 +37,43 @@ namespace SyZeroBlog.Web
 
         public IConfiguration Configuration { get; }
 
-        /// <summary>
-        /// 原生Ioc注入
-        /// </summary>
-        /// <param name="services"></param>
-        /// <returns></returns>
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,//是否验证Issuer
-                      ValidateAudience = true,//是否验证Audience
-                      ValidateLifetime = true,//是否验证失效时间
-                      ValidateIssuerSigningKey = true,//是否验证SecurityKey
-                      ValidAudience = Configuration["JWT:audience"],//Audience
-                      ValidIssuer = Configuration["JWT:issuer"],//Issuer，这两项和前面签发jwt的设置一致
-                      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:SecurityKey"]))//拿到SecurityKey
-                  };
-            });
+          
             services.Replace(ServiceDescriptor.Transient<IControllerActivator, ServiceBasedControllerActivator>());
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddMvcOptions(options =>
+            services.AddControllers().AddMvcOptions(options =>
             {
                 options.Filters.Add(new SyZeroBlog.Web.Core.Authentication.AppVerificationFilter());
                 options.Filters.Add(new SyZeroBlog.Web.Core.Authentication.AppExceptionFilter());
                 options.Filters.Add(new SyZeroBlog.Web.Core.Authentication.AppResultFilter());
-            }).AddJsonOptions(options =>
-                {
-                    options.SerializerSettings.Converters.Add(new LongToStrConverter());
-                }
-            );
-            //动态WebApi
-            services.AddDynamicWebApi();
-            services.AddCors(options =>
-                {
-                    options.AddPolicy("any", builder =>
-                    {
-                        builder.AllowAnyOrigin() //允许任何来源的主机访问
-                            .AllowAnyMethod()
-                            .AllowAnyHeader()
-                            .AllowCredentials();//指定处理cookie
+            }).AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.Converters.Add(new LongToStrConverter());
+            });
 
-                    });
-                }
-            );
+            //��̬WebApi
+            services.AddDynamicWebApi(new DynamicWebApiOptions()
+            {
+                DefaultApiPrefix = "/api/Service"
+            });
+            services.AddCors(options => options.AddPolicy("CorsPolicy",
+            builder =>
+            {
+                builder.AllowAnyMethod()
+                    .SetIsOriginAllowed(_ => true)
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+            }));
+
             #region Swagger
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "SyZeroBlog接口文档",
+                    Title = "SyZeroBlog�ӿ��ĵ�",
                     Description = "RESTful API for SyZeroBlog",
                     Contact = new OpenApiContact() { Name = "SYZERO", Email = "522112669@qq.com", Url = new Uri("http://test6.syzero.com") }
                 });
@@ -104,7 +81,7 @@ namespace SyZeroBlog.Web
                 // Define the BearerAuth scheme that's in use
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
-                    Description = "在下框中输入请求头中需要添加Jwt授权Token：Bearer Token",
+                    Description = "���¿�����������ͷ����Ҫ����Jwt��ȨToken��Bearer Token",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey,
@@ -130,50 +107,42 @@ namespace SyZeroBlog.Web
             });
             #endregion
 
-            return services.AddSyZeroAutofac(AutofacServices);
         }
 
-        /// <summary>
-        /// Autofac注入模块
-        /// </summary>
-        /// <param name="builder"></param>
-        public void AutofacServices(ContainerBuilder builder) {
-
-            //使用AutoMapper
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            //ʹ��AutoMapper
             builder.RegisterModule(new AutoMapperModule());
-            //使用EF仓储
+            //ʹ��EF�ִ�
             builder.RegisterModule(new SyZeroBlogEntityFrameworkModule(Configuration));
-            //使用SyZero
+            //ʹ��SyZero
             builder.RegisterModule(new SyZeroModule());
-            //注入控制器
+            //ע�������
             builder.RegisterModule(new SyZeroControllerModule());
-            //注入Log4Net
+            //ע��Log4Net
             builder.RegisterModule(new Log4NetModule());
-            //注入Redis
+            //ע��Redis
             builder.RegisterModule(new RedisModule(Configuration));
-            //注入公共层
+            //ע�빫����
             builder.RegisterModule(new CommonModule());
         }
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseCors("any");
-         
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "defaultWithArea",
-                    template: "{area}/{controller=Home}/{action=Index}/{id?}");
+            app.UseCors("CorsPolicy");
+            app.UseRouting();
 
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
             });
 
             app.UseSwagger();
@@ -183,7 +152,7 @@ namespace SyZeroBlog.Web
                 c.RoutePrefix = string.Empty;
 
             });
-
+           
         }
     }
 }

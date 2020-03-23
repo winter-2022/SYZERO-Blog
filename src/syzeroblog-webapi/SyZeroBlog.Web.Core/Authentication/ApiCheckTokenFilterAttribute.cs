@@ -15,6 +15,7 @@ using SyZero.Cache;
 using SyZero;
 using SyZero.Runtime.Security;
 using SyZero.Runtime.Entities;
+using System.Threading;
 
 namespace SyZeroBlog.Web.Core.Authentication
 {
@@ -33,7 +34,7 @@ namespace SyZeroBlog.Web.Core.Authentication
         public override void OnActionExecuting(ActionExecutingContext context)
         {
 
-            if (context.HttpContext.User == null)
+            if (Thread.CurrentPrincipal == null)
                 throw new SyMessageBox(new { code = SyMessageBoxStatus.接口授权码无效.ToInt32(), msg = $"{SyMessageBoxStatus.接口授权码无效.ToString()}" });
 
         }

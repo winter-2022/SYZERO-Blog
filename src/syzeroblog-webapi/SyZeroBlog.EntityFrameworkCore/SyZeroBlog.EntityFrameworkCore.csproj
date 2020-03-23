@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>SyZeroBlog.EntityFrameworkCore</AssemblyName>
     <RootNamespace>SyZeroBlog.EntityFrameworkCore</RootNamespace>
     <Platforms>AnyCPU;x64</Platforms>

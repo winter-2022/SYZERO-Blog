@@ -13,10 +13,11 @@ using SyZero.Runtime.Entities;
 using SyZero;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-
+using Panda.DynamicWebApi.Attributes;
 
 namespace SyZeroBlog.Application.BlogManagement.Blogs
 {
+   
     public class BlogAppService : AsyncCrudAppService<Blog, BlogDto, PageAndSortFilterQueryDto, CreateBlogDto>, IBlogAppService
     {
         private readonly IRepository<Blog>  _blogRepository;

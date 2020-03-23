@@ -1,11 +1,6 @@
 // 菜单 侧边栏
 export default [
   {
-    path: '/admin',
-    title: '首页',
-    icon: 'home'
-  },
-  {
     title: '新建文章',
     icon: 'clipboard',
     path: '/admin/BlogEdit/new'

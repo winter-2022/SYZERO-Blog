@@ -15,7 +15,7 @@ const frameIn = [{
   children: [
     // 首页
     {
-      path: '/admin',
+      path: '',
       name: 'admin',
       meta: {
         title: '首页',

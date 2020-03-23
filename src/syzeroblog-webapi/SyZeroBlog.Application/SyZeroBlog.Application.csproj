@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>SyZeroBlog.Application</RootNamespace>
     <AssemblyName>SyZeroBlog.Application</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SyZero.DynamicWebApi" Version="1.0.3" />
+    <PackageReference Include="Panda.DynamicWebApi" Version="1.0.4" />
     <PackageReference Include="SyZero.Web.Common" Version="1.0.3" />
   </ItemGroup>
 

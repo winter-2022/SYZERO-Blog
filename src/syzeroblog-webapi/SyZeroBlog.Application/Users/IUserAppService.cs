@@ -6,7 +6,7 @@ using SyZeroBlog.Application.Users.Dto;
 
 namespace SyZeroBlog.Application.Users
 {
-   public interface IUserAppService:IApplicationService
+   public interface IUserAppService: IApplicationServiceBase
     {
        // List<UserDto> GetUser();
     }

@@ -7,7 +7,7 @@ using SyZeroBlog.Application.Authorization.Accounts.Dto;
 
 namespace SyZeroBlog.Application.Authorization.Accounts
 {
-    public interface IAccountService: IApplicationService
+    public interface IAccountService: IApplicationServiceBase
     {
         Task<bool> Register(RegisterInput input);
     }
