@@ -62,6 +62,24 @@ const frameIn = [{
       props: true,
       component: _import('admin/Blog/Edit')
     },
+    {
+      path: 'Comment',
+      name: 'Comment',
+      meta: {
+        title: '评论管理',
+        auth: true
+      },
+      component: _import('admin/Comment')
+    },
+    {
+      path: 'User',
+      name: 'User',
+      meta: {
+        title: '用户管理',
+        auth: true
+      },
+      component: _import('admin/User')
+    },
     // 演示页面
     {
       path: 'page1',

@@ -23,17 +23,12 @@ export default [
   {
     title: '评论管理',
     icon: 'comments',
-    path: '/admin/page1'
-  },
-  {
-    title: '留言管理',
-    icon: 'commenting',
-    path: '/admin/page1'
+    path: '/admin/Comment'
   },
   {
     title: '用户管理',
     icon: 'user',
-    path: '/admin/page1'
+    path: '/admin/User'
   },
   {
     title: '页面管理',
